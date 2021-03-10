@@ -1,24 +1,46 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
+const logger = require('morgan');
+const cors = require('cors');
+const createError = require('http-errors');
+const path = require('path');
+const app = express();
+app.use(cors())
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  cookieSession({
+    name: 'session',
+    keys: ['user_id'],
+    overwrite: true,
+  })
+);
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+//import process.env settings
+require('dotenv').config();
 
-var app = express();
+const PORT = process.env.PORT || 9000;
+// const { Client } = require('pg');
+// const db = new Client({
+//   connectionString: process.env.DATABASE_URL,
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+//import routes
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
+//use routes
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
@@ -37,5 +59,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}...`)
+})
 
 module.exports = app;
