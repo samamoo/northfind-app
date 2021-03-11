@@ -1,0 +1,19 @@
+.loginpage {
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px;
+  background-color: #F3F3F3;
+  box-shadow: 0px 0px 3px 0px #000000;
+  ;
+  // border: 2px solid lightgray;
+}
+
+.loginpage h1 {
+  text-align: center;
+}
+.form-container {
+  // background-color: red;
+  padding: 50px;
+}
