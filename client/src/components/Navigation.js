@@ -1,10 +1,11 @@
 import React from 'react';
 import { Navbar, NavDropdown, Nav } from "react-bootstrap";
-// import './Navigation.scss';
+import './Navigation.scss';
 
 export default function Navigation () {
   return (
     <Navbar fixed="top" collapseOnSelect expand="md" bg="dark" variant="dark">
+      <img id="logo" src="/img/logo.png"/>
       <Navbar.Brand href="/">NorthFind Assessment Tool</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
@@ -23,9 +24,9 @@ export default function Navigation () {
         <Nav className="mr-auto"></Nav>
         <Nav>
           <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="#">Start New Interview</Nav.Link>
           <Nav.Link href="#">Profile</Nav.Link>
-          <Nav.Link href="/login">Log Out</Nav.Link>
+          <Nav.Link href="/clientform">Start New Interview</Nav.Link>
+          <Nav.Link href="/login">Log In</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
