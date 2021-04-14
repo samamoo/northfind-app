@@ -40,9 +40,11 @@ db.connect();
 //import routes
 const indexRoute = require('./routes/index');
 const usersRoute = require('./routes/users');
+const loginRoute = require('./routes/login');
 
 //use routes
 app.use('/', indexRoute);
+app.use('/api/login', loginRoute(db));
 app.use('/api/users', usersRoute(db));
 
 app.get('/', (req, res) => {
