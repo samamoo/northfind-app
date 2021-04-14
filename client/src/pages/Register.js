@@ -6,6 +6,7 @@ import './Register.scss';
 
 
 export default function Register () {
+  const [redirect, setRedirect] = useState(false);
   const [error, setError] = useState({
     firstName: '',
     lastName: '',
@@ -35,6 +36,7 @@ export default function Register () {
     axios.post("http://localhost:9000/api/users/",  user )
     .then (res => {
       console.log(res, "The response from post to users")
+      setRedirect(true);
     })
   }
 
@@ -90,6 +92,9 @@ export default function Register () {
         <Button variant="primary" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
+        { redirect && <Redirect to={{
+              pathname: '/'
+            }}/>}
       </Form>
       <Link to={"/login"} className="account-question">Have an account? Login Here</Link>
     </div>

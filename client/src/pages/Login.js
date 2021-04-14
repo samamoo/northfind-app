@@ -5,7 +5,7 @@ import axios from 'axios';
 import './Login.scss';
 
 export default function Login () {
-  const [redirect, setRedirect] = useState(false)
+  const [redirect, setRedirect] = useState(false);
   const [error, setError] = useState ( {
     email: '',
     password: '',
@@ -18,17 +18,18 @@ export default function Login () {
   const validate = () => {
     if (user.email === "") {
       setError({...error, email: "Email cannot be blank."});
-      return;
+      return false;
     }
     if (user.password === "") {
       setError({...error, password: "You must provide a password."});
-      return;
+      return false;
     }
     if (!user.email.includes("@north-find.com")) {
       setError({...error, email: "Please enter a valid email"});
-      return;
+      return false;
     }
-    setError({...error, email:''})
+    setError({...error, email:'', password: ''})
+    return true;
   }
 
   const changeHandler = (e) => {
@@ -36,10 +37,20 @@ export default function Login () {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    validate();
+    if(!validate()) {
+      return;
+    };
+    axios.post("http://localhost:9000/api/login/", user )
+    .then (res => {
+      if (!res.data) {
+        console.log("wrong login")
+        return;
+      }
+      console.log(res, "The response from LOGIN")
+      setRedirect(true);
+    })
     // Axios request to db to get the User's information and set session cookie.
   }
-  console.log(user)
 
   return (
     <div className="loginpage">
@@ -62,6 +73,9 @@ export default function Login () {
         <Button variant="primary" type="submit" onClick={handleSubmit}>
           Submit
         </Button>
+        { redirect && <Redirect to={{
+              pathname: '/'
+            }}/>}
       </Form>
       <Link to={"/register"}>Don't have an account? Register Here</Link>
     </div>
