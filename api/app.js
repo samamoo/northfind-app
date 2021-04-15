@@ -7,8 +7,19 @@ const cors = require('cors');
 const createError = require('http-errors');
 const path = require('path');
 const app = express();
+
+
+//import process.env settings
+require('dotenv').config();
+
+const PORT = process.env.PORT || 9000;
+const { Client } = require('pg');
+const db = new Client({
+  connectionString: process.env.DATABASE_URL,
+});
+db.connect();
 app.use(cors({
-  origin: ["http://localhost:3002"], //The front end
+  origin: ["http://localhost:3000"], //The front end
   methods: ["GET", "POST"],
   credentials: true,
 }))
@@ -29,17 +40,6 @@ app.use(
     }
   })
 );
-
-//import process.env settings
-require('dotenv').config();
-
-const PORT = process.env.PORT || 9000;
-const { Client } = require('pg');
-const db = new Client({
-  connectionString: process.env.DATABASE_URL,
-});
-db.connect();
-
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'jade');
@@ -48,11 +48,13 @@ db.connect();
 const indexRoute = require('./routes/index');
 const usersRoute = require('./routes/users');
 const loginRoute = require('./routes/login');
+const clientRoute = require('./routes/client');
 
 //use routes
 app.use('/', indexRoute);
 app.use('/api/login', loginRoute(db));
 app.use('/api/users', usersRoute(db));
+app.use('/api/clients', clientRoute(db));
 
 app.get('/', (req, res) => {
   res.send('test');
