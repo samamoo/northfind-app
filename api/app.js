@@ -7,12 +7,16 @@ const cors = require('cors');
 const createError = require('http-errors');
 const path = require('path');
 const app = express();
-app.use(cors())
+app.use(cors({
+  origin: ["http://localhost:3002"], //The front end
+  methods: ["GET", "POST"],
+  credentials: true,
+}))
+// app.use(cors())
 app.use(logger('dev'));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(
@@ -20,6 +24,9 @@ app.use(
     name: 'session',
     keys: ['user_id'],
     overwrite: true,
+    cookie: {
+      expires: 60 * 60 * 24
+    }
   })
 );
 
