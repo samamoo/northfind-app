@@ -12,6 +12,7 @@ export default function Register () {
     lastName: '',
     email: '',
     password: '',
+    exists: '',
   })
   const [user, setUser ] = useState(
     {
@@ -19,6 +20,7 @@ export default function Register () {
       lastName: '',
       email: '',
       password: '',
+      exists: false,
 
     }
   )
@@ -31,12 +33,18 @@ export default function Register () {
     if (!validate()) { //if user does not pass validation, return.
       return;
     }
-      console.log(user)
     // Axios request to db to get the User's information and set session cookie.
     axios.post("http://localhost:9000/api/users/",  user )
     .then (res => {
+      if (res.data === 'exists') {
+        setUser({...user, exists:true});
+        return;
+      }
       console.log(res, "The response from post to users")
-      setRedirect(true);
+      if (res.data.email) {
+        setUser({...user, exists:false})
+        setRedirect(true);
+      }
     })
   }
 
@@ -58,10 +66,14 @@ export default function Register () {
       return false;
     }
     if (!user.email.includes("@north-find.com")) {
-      setError({...error, email: "Please enter a valid email"});
+      setError({...error, email: "Please enter a valid email."});
       return false;
     }
-    setError({...error, firstName:'', lastName: '', email:'', password:''})
+    if (user.exists) {
+      setError({...error, exists: "This user already exists."})
+      return false;
+    }
+    setError({...error, firstName:'', lastName: '', email:'', password:'', exists:''})
     return true;
   }
 
@@ -69,6 +81,8 @@ export default function Register () {
     <div className="registerpage">
       <Form className="form-container">
         <h1>Register</h1>
+        <hr/>
+        <section className="register-validation">{error.exists}</section>
         <Form.Group>
           <Form.Label>First Name</Form.Label>
           <Form.Control type="text" name="firstName" as="input" onChange = {changeHandler}></Form.Control>
