@@ -23,7 +23,14 @@ export default function ClientForm () {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
-    // axios post request.
+    axios.post("http://localhost:9000/api/clients/", client )
+    .then (res => {
+      console.log(res, "Added new data")
+      
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   return (
