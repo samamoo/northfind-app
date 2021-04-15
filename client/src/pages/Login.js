@@ -5,7 +5,8 @@ import axios from 'axios';
 import './Login.scss';
 
 export default function Login () {
-  const [redirect, setRedirect] = useState(false);
+  axios.defaults.withCredentials = true;
+  const [redirect, setRedirect] = useState(false)
   const [error, setError] = useState ( {
     email: '',
     password: '',
@@ -38,15 +39,16 @@ export default function Login () {
   const handleSubmit = (e) => {
     e.preventDefault();
     if(!validate()) {
+      console.log("wrong password or something")
       return;
     };
     axios.post("http://localhost:9000/api/login/", user )
     .then (res => {
+      console.log(res, "Data from Login.js")
       if (!res.data) {
         console.log("wrong login")
         return;
       }
-      console.log(res, "The response from LOGIN")
       setRedirect(true);
     })
     // Axios request to db to get the User's information and set session cookie.

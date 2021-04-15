@@ -1,8 +1,28 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Navbar, NavDropdown, Nav } from "react-bootstrap";
 import './Navigation.scss';
 
 export default function Navigation () {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    axios.get("http://localhost:9000/api/login/")
+    .then(res => {
+      if (res.data.loggedIn) {
+        setLoggedIn(true);
+      }
+    })
+  },[])
+
+  const logout = function() {
+    axios.post("http://localhost:9000/api/login/logout")
+    .then(res => {
+      setLoggedIn(false);
+    })
+  }
+
+  console.log(loggedIn)
   return (
     <Navbar fixed="top" collapseOnSelect expand="md" bg="dark" variant="dark">
       <img id="logo" src="/img/logo.png"/>
@@ -26,7 +46,7 @@ export default function Navigation () {
           <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="#">Profile</Nav.Link>
           <Nav.Link href="/clientform">Start New Interview</Nav.Link>
-          <Nav.Link href="/login">Log In</Nav.Link>
+          {loggedIn ? <Nav.Link href="/login" onClick={logout}>Log Out</Nav.Link> : <Nav.Link href="/login" >Log In</Nav.Link>}
         </Nav>
       </Navbar.Collapse>
     </Navbar>
