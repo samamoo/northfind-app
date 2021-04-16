@@ -3,7 +3,8 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 module.exports = (db) => {
-  // router.get('/', (req, res) => {
+  // router.get('/cookie', (req, res) => {
+  //   console.log(req.session.user_id)
   //   const userId = req.session.user_id;
   //   if (userId) {
   //     db.query(
@@ -12,6 +13,7 @@ module.exports = (db) => {
   //       [userId]
   //     )
   //       .then((data) => {
+  //         console.log(data, "THEDATA")
   //         if (data) {
   //           res.status(200).send({loggedIn:true, user: data.rows[0]});
   //         } else {

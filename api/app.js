@@ -23,7 +23,10 @@ app.use(
   cookieSession({
     name: 'session',
     keys: ['user_id'],
+    secret: 'subscribe',
     overwrite: true,
+    resave: false,
+    saveUninitialized: false,
     cookie: {
       expires: 60 * 60 * 24
     }
