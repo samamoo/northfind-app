@@ -1,12 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import './Login.scss';
 
-export default function Login () {
+export default function Login (props) {
   axios.defaults.withCredentials = true;
-  const [redirect, setRedirect] = useState(false)
   const [error, setError] = useState ( {
     email: '',
     password: '',
@@ -16,7 +15,8 @@ export default function Login () {
       password: ''
     })
   
-  const validate = () => {
+  const validate = (e) => {
+    e.preventDefault();
     if (user.email === "") {
       setError({...error, email: "Email cannot be blank."});
       return false;
@@ -29,29 +29,13 @@ export default function Login () {
       setError({...error, email: "Please enter a valid email"});
       return false;
     }
-    setError({...error, email:'', password: ''})
+    setError({...error, email:'', password: ''});
+    props.loginUser(user)
     return true;
   }
 
   const changeHandler = (e) => {
     setUser({...user, [e.target.name]: e.target.value})
-  }
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if(!validate()) {
-      console.log("wrong password or something")
-      return;
-    };
-    axios.post("http://localhost:9000/api/login/", user )
-    .then (res => {
-      console.log(res, "Data from Login.js")
-      if (!res.data) {
-        console.log("wrong login")
-        return;
-      }
-      setRedirect(true);
-    })
-    // Axios request to db to get the User's information and set session cookie.
   }
 
   return (
@@ -72,11 +56,12 @@ export default function Login () {
           <Form.Control type="password" name="password" as="input" autoComplete="off" placeholder="Password" onChange = {changeHandler}/>
           <section className="register-validation">{error.password}</section>
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={handleSubmit}>
+        <Button variant="primary" type="submit" onClick={validate}>
           Submit
         </Button>
-        { redirect && <Redirect to={{
-              pathname: '/'
+        { props.state.redirect && <Redirect to={{
+              pathname: '/',
+              state: props.state
             }}/>}
       </Form>
       <Link to={"/register"}>Don't have an account? Register Here</Link>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Navbar, NavDropdown, Nav } from "react-bootstrap";
-import axios from 'axios';
 import './Navigation.scss';
 
 export default function Navigation (props) {
+  console.log(props, "Props in login")
 
   return (
     <Navbar fixed="top" collapseOnSelect expand="md" bg="dark" variant="dark">
-      <img id="logo" src="/img/logo.png"/>
+      <img id="logo" src="/img/logo.png" alt="north-find logo"/>
       <Navbar.Brand href="/">NorthFind Assessment Tool</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
@@ -26,7 +26,7 @@ export default function Navigation (props) {
         <Nav className="mr-auto"></Nav>
         <Nav>
           <Nav.Link href="/">Home</Nav.Link>
-          <Nav.Link href="#">Profile</Nav.Link>
+          <Nav.Link href="/profile">Profile</Nav.Link>
           <Nav.Link href="/clientform">Start New Interview</Nav.Link>
           {props.state.loggedIn ? <Nav.Link href="/login" onClick={props.logout}>Log Out</Nav.Link> : <Nav.Link href="/login" >Log In</Nav.Link>}
         </Nav>

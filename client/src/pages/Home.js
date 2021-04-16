@@ -1,9 +1,9 @@
-import axios from 'axios';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button } from 'react-bootstrap';
 import './Home.scss';
 
-export default function Home () {
+export default function Home (props) {
+  console.log(props.userData)
 
   // useEffect(() => {
   //   axios.get("http://localhost:9000/api/login/")

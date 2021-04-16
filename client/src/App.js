@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import useApplicationData from './hooks/useApplicationData';
 import Navigation from "./components/Navigation";
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Profile from './pages/Profile';
 import Register from './pages/Register';
 import ClientForm from './pages/ClientForm';
-import axios from 'axios';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
 function App() {
-  const { state, logout } = useApplicationData();
+  const { state, logoutUser, loginUser } = useApplicationData();
+  console.log(state)
 
   return (
     <Router>
-      <Navigation state={state} logout={logout}/>
+      <Navigation state={state} logout={logoutUser}/>
       <Switch>
-        <Route path="/login" exact component={Login}/>
+        <Route path="/login" exact render={(props) => <Login {...props} loginUser={loginUser} state={state} />}/>
+        <Route path="/profile" exact render={(props) => <Profile {...props} state={state}/>}/>
         <Route path="/register" exact component={Register}/>
         <Route path="/clientform" exact component={ClientForm}/>
         <Route path="/" exact component={Home}/>
