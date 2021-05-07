@@ -32,6 +32,7 @@ module.exports = (db) => {
         arrayParams
       )
         .then((data) => {
+          res.status(200).send("Inserted")
          console.log(data);
         })
         .catch((err) => {
