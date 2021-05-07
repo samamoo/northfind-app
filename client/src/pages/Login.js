@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
-import axios from 'axios';
 import './Login.scss';
 
 export default function Login (props) {
-  axios.defaults.withCredentials = true;
   const [error, setError] = useState ( {
     email: '',
     password: '',
@@ -26,11 +24,20 @@ export default function Login (props) {
       return false;
     }
     if (!user.email.includes("@north-find.com")) {
-      setError({...error, email: "Please enter a valid email"});
+      setError({...error, email: "Please enter a valid email."});
       return false;
     }
     setError({...error, email:'', password: ''});
     props.loginUser(user)
+    .then((res)=> {
+      if (res === false) {
+        setError({...error, password: "Your email and password do not match."});
+        return false;
+      }
+    })
+    .catch((error) => {
+      return false;
+    })
     return true;
   }
 
