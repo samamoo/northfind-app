@@ -19,7 +19,7 @@ const db = new Client({
 });
 db.connect();
 app.use(cors({
-  origin: ["http://localhost:3000"], //The front end
+  origin: ["http://localhost:3002"], //The front end
   methods: ["GET", "POST"],
   credentials: true,
 }))
