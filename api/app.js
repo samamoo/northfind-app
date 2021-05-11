@@ -52,12 +52,14 @@ const indexRoute = require('./routes/index');
 const usersRoute = require('./routes/users');
 const loginRoute = require('./routes/login');
 const clientRoute = require('./routes/client');
+// const interviewRoute = require('./routes/interview');
 
 //use routes
 app.use('/', indexRoute);
 app.use('/api/login', loginRoute(db));
 app.use('/api/users', usersRoute(db));
 app.use('/api/clients', clientRoute(db));
+// app.use('/api/interview', interviewRoute(db));
 
 app.get('/', (req, res) => {
   res.send('test');
