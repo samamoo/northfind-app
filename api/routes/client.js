@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
 
 module.exports = (db) => {
 
@@ -9,7 +8,7 @@ module.exports = (db) => {
     db.query(`SELECT * FROM clients;`)
       .then((data) => {
         if (data) {
-          res.status(200).send(data.rows[0]);
+          res.status(200).send(data.rows);
         } else {
           res.send(false);
         }
