@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Form, FormControl, Button, InputGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Redirect, Link } from 'react-router-dom';
-import axios from 'axios';
-import './ClientForm.scss';
+import { Form, FormControl, Button, InputGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
+import axios from 'axios';
+import { titleCase } from '../helpers/helpers';
+import './ClientForm.scss';
 
 export default function ClientForm () {
   const [redirect, setRedirect] = useState(false);
@@ -23,6 +24,7 @@ export default function ClientForm () {
     clients: [],
     selectedClient: ''
   });
+  // Find a way to filter out repeating clients!!!!!!!!!!!!
 
   useEffect(() => {
     axios.get('http://localhost:9000/api/clients/')
@@ -30,11 +32,7 @@ export default function ClientForm () {
       setClientList((prev) => ({...prev, clients: res.data}))
     })
   },[]);
-  // Title case
-  const titleCase = function(string) {
-    const newString = string.split(' ').map(w => w[0].toUpperCase() + w.substr(1).toLowerCase()).join(' ');
-    return newString;
-  }
+
   // Set client from dropdown
   const selectClient = function(e) {
     setClient(() => ({...client, companyName: e.target.innerHTML }))
