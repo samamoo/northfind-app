@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Profile.scss';
 
 export default function Profile(props) {
-  const user = props.state.userData
+  const user = props.state.userData;
 
   return(
     <div>
