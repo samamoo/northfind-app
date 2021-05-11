@@ -33,9 +33,29 @@ export default function ClientForm () {
     })
   },[]);
 
+  const validate = () => {
+    if (client.firstName === '') {
+      setError({...error, firstName: 'You must enter a name.'});
+      return false;
+    }
+    if (client.lastName === '') {
+      setError({...error, lastName: 'You must enter a name.'});
+      return false;
+    }
+    if (client.companyName === '') {
+      setError({...error, companyName: 'You must enter or select a company.'});
+      return false;
+    }
+    if (client.email === '') {
+      setError({...error, email: 'You must enter an email.'});
+      return false;
+    }
+    setError({...error, firstName:'', lastName:'', companyName: '', email:''});
+    return true;
+  }
   // Set client from dropdown
-  const selectClient = function(e) {
-    setClient(() => ({...client, companyName: e.target.innerHTML }))
+  const selectClient = (e) => {
+    setClient(() => ({...client, companyName: e.target.innerHTML }));
   }
 
   // Submit new client
@@ -44,6 +64,9 @@ export default function ClientForm () {
   }
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validate()) {
+      return;
+    } 
     axios.post("http://localhost:9000/api/clients/", client )
     .then (res => {
       console.log(res, "Added new data")
