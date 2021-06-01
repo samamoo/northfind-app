@@ -5,7 +5,6 @@ module.exports = (db) => {
   router.get('/', (req, res, next) => {
     db.query(`SELECT * FROM companies;`)
     .then((data) => {
-      console.log(data, "Data from get request for companies")
       if (data) {
         res.status(200).send(data.rows);
       } else {

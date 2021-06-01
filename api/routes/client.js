@@ -18,25 +18,29 @@ module.exports = (db) => {
       });
   });
   
-  // Get a User by ID
+  // Add a new client
   router.post('/', (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
     const company = req.body.companyName;
-    const arrayParams = [firstName, lastName, email, company];
-   
+    // Get the company_id
+    db.query(`SELECT id FROM companies WHERE company_name = $1`, [company])
+    .then((x) => {
+      const companyId = x.rows[0]
+      const arrayParams = [firstName, lastName, email, companyId.id];
+      // Insert new client
       db.query(
-        `Insert into clients (first_name,last_name,email,company) values($1, $2, $3, $4);`,
+        `Insert into clients (first_name,last_name,email,company_id) values($1, $2, $3, $4);`,
         arrayParams
       )
-        .then((data) => {
-          res.status(200).send("Inserted")
-         console.log(data);
-        })
-        .catch((err) => {
-          res.status(500).json({ error: err.message });
-        });
+      .then((data) => {
+        res.status(200).send("Inserted")
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+    })
     
   });
   // INSERT A NEW USER INTO DB

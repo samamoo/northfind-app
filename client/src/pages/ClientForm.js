@@ -33,12 +33,6 @@ export default function ClientForm () {
       setCompanyList((prev) => ({...prev, companies: res.data}))
     })
   },[]);
-  // useEffect(() => {
-  //   axios.get('http://localhost:9000/api/clients/')
-  //   .then(res => {
-  //     setClientList((prev) => ({...prev, clients: res.data}))
-  //   })
-  // },[]);
 
   const validate = () => {
     if (client.firstName === '') {
@@ -75,14 +69,14 @@ export default function ClientForm () {
       return;
     } 
     console.log(client)
-    // axios.post("http://localhost:9000/api/clients/", client )
-    // .then (res => {
-    //   console.log(res, "Added new data")
+    axios.post("http://localhost:9000/api/clients/", client )
+    .then (res => {
+      console.log(res, "Added new data")
       
-    // })
-    // .catch(err => {
-    //   console.log(err);
-    // })
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 
   return (
