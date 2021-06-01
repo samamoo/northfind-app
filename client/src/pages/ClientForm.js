@@ -20,18 +20,25 @@ export default function ClientForm () {
     companyName: '',
     email: ''
   });
-  const [clientList, setClientList] = useState({
-    clients: [],
+  const [companyList, setCompanyList] = useState({
+    companies: [],
     selectedClient: ''
   });
   // Find a way to filter out repeating clients!!!!!!!!!!!!
 
   useEffect(() => {
-    axios.get('http://localhost:9000/api/clients/')
+    axios.get('http://localhost:9000/api/company/')
     .then(res => {
-      setClientList((prev) => ({...prev, clients: res.data}))
+      console.log(res.data)
+      setCompanyList((prev) => ({...prev, companies: res.data}))
     })
   },[]);
+  // useEffect(() => {
+  //   axios.get('http://localhost:9000/api/clients/')
+  //   .then(res => {
+  //     setClientList((prev) => ({...prev, clients: res.data}))
+  //   })
+  // },[]);
 
   const validate = () => {
     if (client.firstName === '') {
@@ -43,7 +50,7 @@ export default function ClientForm () {
       return false;
     }
     if (client.companyName === '') {
-      setError({...error, companyName: 'You must enter or select a company.'});
+      setError({...error, companyName: 'You must select a company.'});
       return false;
     }
     if (client.email === '') {
@@ -67,14 +74,15 @@ export default function ClientForm () {
     if (!validate()) {
       return;
     } 
-    axios.post("http://localhost:9000/api/clients/", client )
-    .then (res => {
-      console.log(res, "Added new data")
+    console.log(client)
+    // axios.post("http://localhost:9000/api/clients/", client )
+    // .then (res => {
+    //   console.log(res, "Added new data")
       
-    })
-    .catch(err => {
-      console.log(err);
-    })
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    // })
   }
 
   return (
@@ -91,17 +99,17 @@ export default function ClientForm () {
             <Form.Label>Last Name</Form.Label>
             <Form.Control type="text" name="lastName" as="input" onChange = {changeHandler}></Form.Control>
             <section className="register-validation">{error.lastName}</section>
-            <Form.Label>Company Name <strong>or</strong> Select from existing clients</Form.Label>
+            <Form.Label>Company Name</Form.Label>
             {/* <Form.Control type="text" name="companyName" as="input" onChange = {changeHandler} value={client.companyName}></Form.Control> */}
             <InputGroup className="mb-3">
               <DropdownButton as={InputGroup.Prepend} variant="outline-secondary" title="Select" id="input-group-dropdown-1">
-              {clientList.clients.map((clientItem) => {
+              {companyList.companies.map((company) => {
                 return (
-                  <Dropdown.Item value={clientItem.company} onClick={selectClient}>{titleCase(clientItem.company)}</Dropdown.Item>
+                  <Dropdown.Item key={company.id} value={company.company_name} onClick={selectClient}>{company.company_name}</Dropdown.Item>
                   )
                 })}
               </DropdownButton>
-            <Form.Control type="text" name="companyName" as="input" aria-describedby="basic-addon1" value={client.companyName} autocomplete="off" onChange = {changeHandler}/>
+            <Form.Control type="text" name="companyName" as="input" aria-describedby="basic-addon1" defaultValue={client.companyName} autoComplete="off" readOnly/>
             </InputGroup>
             <section className="register-validation">{error.companyName}</section>
           </Form.Group>
