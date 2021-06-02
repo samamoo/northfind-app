@@ -1,0 +1,35 @@
+.admin-client {
+  display: flex;
+  flex-direction: column;
+  // align-items: center;
+  margin-top: 130px;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.admin-client-banner {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.line {
+  clear: both;
+  height: 1px;
+  background-color: #ccc;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  width: 100%;
+}
+.admin-client-searchbar-content {
+  display: flex;
+
+  p {
+    margin-top: 10px;
+    margin-right: 20px;
+  }
+
+  .textfield {
+    width: 400px;
+    height: 40px;
+  }
+}
