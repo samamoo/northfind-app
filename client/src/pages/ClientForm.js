@@ -72,7 +72,6 @@ export default function ClientForm () {
     axios.post("http://localhost:9000/api/clients/", client )
     .then (res => {
       console.log(res, "Added new data")
-      
     })
     .catch(err => {
       console.log(err);
