@@ -43,7 +43,5 @@ module.exports = (db) => {
     })
     
   });
-  // INSERT A NEW USER INTO DB
-  
   return router;
 }
