@@ -16,10 +16,10 @@ export default function Navigation (props) {
           <Nav.Link href="#pricing">Pricing</Nav.Link> */}
           <NavDropdown title="Admin" id="collasible-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Dashboard</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Clients</NavDropdown.Item>
+            <NavDropdown.Item href="/admin-client">Clients</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.3">Interview Questions</NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">Edit Clients</NavDropdown.Item>
+            <NavDropdown.Item href="/admin-client">Edit Clients</NavDropdown.Item>
             <NavDropdown.Item href="#action/3.4">Edit Interview Questions</NavDropdown.Item>
           </NavDropdown>
         </Nav>

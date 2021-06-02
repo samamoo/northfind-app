@@ -11,6 +11,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import AdminClient from './pages/admin/AdminClient';
 
 function App() {
   const { state, logoutUser, loginUser } = useApplicationData();
@@ -25,6 +26,7 @@ function App() {
         <Route path="/register" exact component={Register}/>
         <Route path="/clientform" exact component={ClientForm}/>
         <Route path="/" exact component={Home}/>
+        <Route path="/admin-client" exact component={AdminClient}/>
       </Switch>
     </Router>
   );
