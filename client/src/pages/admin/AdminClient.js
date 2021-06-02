@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Modal from '../../components/Modal.js';
 import axios from 'axios';
 import './AdminClient.scss';
 
