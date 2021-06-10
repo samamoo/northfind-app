@@ -24,7 +24,6 @@ export default function ClientForm () {
     companies: [],
     selectedClient: ''
   });
-  // Find a way to filter out repeating clients!!!!!!!!!!!!
 
   useEffect(() => {
     axios.get('http://localhost:9000/api/company/')
@@ -84,7 +83,6 @@ export default function ClientForm () {
         <Form className="form-container">
           <h4>Please fill out client information or select from an existing client</h4>
           <hr/>
-          {/* Search for client from database */}
           <Form.Group>
             <Form.Label>First Name</Form.Label>
             <Form.Control type="text" name="firstName" as="input" onChange = {changeHandler}></Form.Control>
