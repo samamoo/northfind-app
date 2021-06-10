@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { Modal, Button, Form, FormControl } from 'react-bootstrap'
+// import Modal from 'react-modal';
 import axios from 'axios';
 import './AdminClient.scss';
+import AddClientModal from './AddClientModal';
 
 export default function AdminClient () {
   const [searchTerm, setSearchTerm] = useState("");
+  const [modalIsOpen, setIsOpen] = useState(false);
   const [companyList, setCompanyList] = useState( {
     companies: []
   });
@@ -15,9 +19,8 @@ export default function AdminClient () {
     })
   },[]);
 
-  const openModal = () => {
-    console.log("modal is open")
-  }
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   const filterSearch = () => {
     let results = [];
@@ -31,6 +34,9 @@ export default function AdminClient () {
       }
     })
     return results;
+  }
+  const addNewCompany = (company) => {
+    console.log(company,"received")
   }
 
   return(
@@ -61,6 +67,12 @@ export default function AdminClient () {
           )
         })}
       </div>
+        {modalIsOpen && 
+          <AddClientModal 
+          closeModal={closeModal} 
+          modalIsOpen={modalIsOpen}
+          onSave={addNewCompany}/>
+        }
     </main>
   )
 }
