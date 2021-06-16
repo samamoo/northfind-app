@@ -8,36 +8,59 @@ export default function AdminQuestions() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [areas, setAreas] = useState([]);
   const [groups, setGroups] = useState([]);
-  const [questionList, setQuestionList] = useState( {
-    questions: []
-  });
+  const [questionList, setQuestionList] = useState([]);
 
   // Get list of interview questions
   useEffect(() => {
     axios.get('http://localhost:9000/api/questions/')
     .then(res => {
-      setQuestionList((prev) => ({...prev, questions: res.data}))
+      setQuestionList(res.data);
     })
   },[]);
   useEffect(() => {
     axios.get('http://localhost:9000/api/areas/')
     .then(res => {
-      setAreas(res.data)
+      setAreas(res.data);
     })
   },[]);
   useEffect(() => {
     axios.get('http://localhost:9000/api/groups/')
     .then(res => {
-      setGroups(res.data)
+      setGroups(res.data);
     })
   },[]);
-  console.log(groups)
 
   // Open and Close modal
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  return(
+  // Filter search results
+  const filterSearch = () => {
+    let results = [];
+    if (searchTerm === "") {
+      return questionList;
+    }
+    areas.forEach((area) => {
+      if (area.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+        let questionsByArea = questionList.filter((q) => {
+          return q.area_id === area.id;
+        })
+        results = [...results, ...questionsByArea];
+      }
+    })
+    // groups.forEach((group) => {
+    //   if (group.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+    //     let questionsByGroup = questionList.filter((q) => {
+          
+    //     })
+    //     results = [...results, ...questionsByGroup];
+    //   }
+    // })
+    console.log(results)
+    return results;
+  }
+
+  return( questionList &&
     <main className="admin-client">
       <div className="admin-client-banner">
         <h1>Interview Questions</h1>
@@ -69,7 +92,7 @@ export default function AdminQuestions() {
             </tr>
           </thead>
           <tbody>
-            {questionList.questions.map((val) => {
+            {filterSearch().map((val, key) => {
               for (const area of areas) {
                 for (const group of groups) {
                   if (val.area_id === area.id && area.group_id === group.id) {
