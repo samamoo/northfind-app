@@ -6,12 +6,13 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
 import ClientForm from './pages/ClientForm';
+import AdminClient from './pages/admin/AdminClient';
+import AdminQuestions from './pages/admin/AdminQuestions';
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
-import AdminClient from './pages/admin/AdminClient';
 
 function App() {
   const { state, logoutUser, loginUser } = useApplicationData();
@@ -27,6 +28,7 @@ function App() {
         <Route path="/clientform" exact component={ClientForm}/>
         <Route path="/" exact component={Home}/>
         <Route path="/admin-client" exact component={AdminClient}/>
+        <Route path="/admin-questions" exact component={AdminQuestions}/>
       </Switch>
     </Router>
   );

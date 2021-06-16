@@ -17,10 +17,10 @@ export default function Navigation (props) {
           <NavDropdown title="Admin" id="collasible-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Dashboard</NavDropdown.Item>
             <NavDropdown.Item href="/admin-client">Clients</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Interview Questions</NavDropdown.Item>
+            <NavDropdown.Item href="/admin-questions">Interview Questions</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href="/admin-client">Edit Clients</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.4">Edit Interview Questions</NavDropdown.Item>
+            <NavDropdown.Item href="/admin-questions">Edit Interview Questions</NavDropdown.Item>
           </NavDropdown>
         </Nav>
         <Nav className="mr-auto"></Nav>
