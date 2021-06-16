@@ -16,7 +16,6 @@ export default function AddClientModal(props) {
   }
 
   const changeHandler = (e) => {
-    console.log(e.target.value)
     setCompany({...company, [e.target.name]: e.target.value })
   }
   const handleSubmit = (e) => {
@@ -24,7 +23,7 @@ export default function AddClientModal(props) {
     if (!validate()) {
       return;
     }
-    props.onSave(company);
+    props.addNewCompany(company);
     props.closeModal();
   }
 

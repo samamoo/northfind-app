@@ -12,16 +12,18 @@ export default function AdminClient () {
     companies: []
   });
 
+  // Get list of companies
   useEffect(() => {
     axios.get('http://localhost:9000/api/company/')
     .then(res => {
+      console.log("Update")
       setCompanyList((prev) => ({...prev, companies: res.data}))
     })
   },[]);
-
+  // Open and Close modal
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
-
+  // Filter the search results
   const filterSearch = () => {
     let results = [];
     if (searchTerm === "") {
@@ -35,8 +37,16 @@ export default function AdminClient () {
     })
     return results;
   }
+  // Submit a new company and update companyList
   const addNewCompany = (company) => {
-    console.log(company,"received")
+    axios.post("http://localhost:9000/api/company/", company )
+    .then((res) => {
+      const newList = res.data;
+      setCompanyList((prev) => ({...prev, companies: newList}))
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   return(
@@ -71,7 +81,7 @@ export default function AdminClient () {
           <AddClientModal 
           closeModal={closeModal} 
           modalIsOpen={modalIsOpen}
-          onSave={addNewCompany}/>
+          addNewCompany={addNewCompany}/>
         }
     </main>
   )

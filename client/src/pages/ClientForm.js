@@ -67,7 +67,6 @@ export default function ClientForm () {
     if (!validate()) {
       return;
     } 
-    console.log(client)
     axios.post("http://localhost:9000/api/clients/", client )
     .then (res => {
       console.log(res, "Added new data")
