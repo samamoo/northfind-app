@@ -23,6 +23,7 @@ export default function AddClientModal(props) {
     if (!validate()) {
       return;
     }
+    // Add check for if company already exists in the database
     props.addNewCompany(company);
     props.closeModal();
   }
@@ -30,7 +31,7 @@ export default function AddClientModal(props) {
   return(
       <Modal show={props.modalIsOpen} onHide={props.closeModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
+          <Modal.Title>Add a New Company</Modal.Title>
         </Modal.Header>
           <Form className="form-container" style={{width: "100%"}}>
             <Modal.Body>
@@ -39,7 +40,7 @@ export default function AddClientModal(props) {
                 <section className="register-validation">{error.companyName}</section>
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={props.closeModal}>Close</Button>
+              <Button variant="secondary" onClick={props.closeModal}>Cancel</Button>
               <Button variant="primary" onClick={handleSubmit}>Save Changes</Button>
             </Modal.Footer>
           </Form>
