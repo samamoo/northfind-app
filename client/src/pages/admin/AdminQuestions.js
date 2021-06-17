@@ -1,5 +1,6 @@
 import React , { useState, useEffect } from 'react';
 import { Modal, Button, Form, FormControl } from 'react-bootstrap'
+import AddQuestionModal from './AddQuestionModal';
 import axios from 'axios';
 import './AdminQuestions.scss';
 
@@ -73,7 +74,7 @@ export default function AdminQuestions() {
           className="textfield" 
           id="outlined-basic"
           variant="outlined"
-          placeholder="Search by Area or Group"
+          placeholder="Search by Area (or Group?)"
           autoComplete='off' 
           onChange={event => {setSearchTerm(event.target.value)}}>
           </input> 
@@ -112,6 +113,11 @@ export default function AdminQuestions() {
           </tbody>
         </table>
       </div>
+      {modalIsOpen &&
+      <AddQuestionModal
+      closeModal={closeModal}
+      modalIsOpen={modalIsOpen}/>
+      }
     </main>
   )
 }
