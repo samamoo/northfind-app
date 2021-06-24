@@ -4,6 +4,7 @@ import { Modal, Button, Form, FormControl } from 'react-bootstrap'
 import axios from 'axios';
 import './AdminClient.scss';
 import AddClientModal from './AddClientModal';
+import BackToTop from '../../components/BackToTop';
 
 export default function AdminClient () {
   const [searchTerm, setSearchTerm] = useState("");
@@ -83,6 +84,7 @@ export default function AdminClient () {
           modalIsOpen={modalIsOpen}
           addNewCompany={addNewCompany}/>
         }
+        <BackToTop showBelow={250}/>
     </main>
   )
 }

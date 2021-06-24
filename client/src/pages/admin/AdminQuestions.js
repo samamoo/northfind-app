@@ -1,6 +1,7 @@
 import React , { useState, useEffect } from 'react';
 import { Modal, Button, Form, FormControl } from 'react-bootstrap'
 import AddQuestionModal from './AddQuestionModal';
+import BackToTop from '../../components/BackToTop';
 import axios from 'axios';
 import './AdminQuestions.scss';
 
@@ -118,6 +119,7 @@ export default function AdminQuestions() {
       closeModal={closeModal}
       modalIsOpen={modalIsOpen}/>
       }
+      <BackToTop showBelow={250}/>
     </main>
   )
 }
