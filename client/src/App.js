@@ -25,7 +25,7 @@ function App() {
         <Route path="/login" exact render={(props) => <Login {...props} loginUser={loginUser} state={state} />}/>
         <Route path="/profile" exact render={(props) => <Profile {...props} state={state}/>}/>
         <Route path="/register" exact component={Register}/>
-        <Route path="/clientform" exact component={ClientForm}/>
+        <Route path="/clientform" exact render={(props) => <ClientForm {...props} state={state}/>}/>
         <Route path="/" exact component={Home}/>
         <Route path="/admin-client" exact component={AdminClient}/>
         <Route path="/admin-questions" exact component={AdminQuestions}/>
