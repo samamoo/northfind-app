@@ -31,11 +31,11 @@ module.exports = (db) => {
       const arrayParams = [firstName, lastName, email, companyId.id];
       // Insert new client
       db.query(
-        `Insert into clients (first_name,last_name,email,company_id) values($1, $2, $3, $4);`,
+        `INSERT INTO clients (first_name,last_name,email,company_id) VALUES($1, $2, $3, $4) RETURNING *;`,
         arrayParams
       )
       .then((data) => {
-        res.status(200).send("Inserted")
+        res.status(200).json(data.rows[0])
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });

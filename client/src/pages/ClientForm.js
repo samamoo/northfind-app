@@ -6,7 +6,8 @@ import axios from 'axios';
 import { titleCase } from '../helpers/helpers';
 import './ClientForm.scss';
 
-export default function ClientForm () {
+export default function ClientForm (props) {
+  const user = props.state.userData;
   const [redirect, setRedirect] = useState(false);
   const [client, setClient] = useState({
       firstName: '',
@@ -28,7 +29,6 @@ export default function ClientForm () {
   useEffect(() => {
     axios.get('http://localhost:9000/api/company/')
     .then(res => {
-      console.log(res.data)
       setCompanyList((prev) => ({...prev, companies: res.data}))
     })
   },[]);
@@ -68,8 +68,15 @@ export default function ClientForm () {
       return;
     } 
     axios.post("http://localhost:9000/api/clients/", client )
-    .then (res => {
-      console.log(res, "Added new data")
+    .then ((res) => {
+      const clientId = res.data.id;
+      const userId = user.id;
+      const session = { clientId, userId}
+      console.log(session, "session")
+      axios.post("http://localhost:9000/api/interview", session)
+      .then ((x) => {
+        console.log(x)
+      })
     })
     .catch(err => {
       console.log(err);
