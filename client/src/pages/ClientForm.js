@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { Form, FormControl, Button, InputGroup, Dropdown, DropdownButton } from 'react-bootstrap';
-import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import axios from 'axios';
-import { titleCase } from '../helpers/helpers';
 import './ClientForm.scss';
 
 export default function ClientForm (props) {
@@ -67,15 +65,17 @@ export default function ClientForm (props) {
     if (!validate()) {
       return;
     } 
+    // Create a new client
     axios.post("http://localhost:9000/api/clients/", client )
     .then ((res) => {
       const clientId = res.data.id;
       const userId = user.id;
       const session = { clientId, userId}
       console.log(session, "session")
+      // Create an interview session
       axios.post("http://localhost:9000/api/interview", session)
-      .then ((x) => {
-        console.log(x)
+      .then (() => {
+        setRedirect(true);
       })
     })
     .catch(err => {
@@ -120,6 +120,7 @@ export default function ClientForm (props) {
           <Button variant="primary" type="submit" onClick={handleSubmit}>
             Submit Client
           </Button>
+          { redirect && <Redirect  to={{pathname:"/interview"}}/>}
         </Form>
       </div>
     </main>
