@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Col, Button, Form, FormControl } from 'react-bootstrap';
+import axios from 'axios';
 
 export default function AddQuestionModal(props) {
   const [error, setError] = useState({
@@ -13,7 +14,6 @@ export default function AddQuestionModal(props) {
     weight: 0,
     assessment: 0,
     area: '',
-    group: '',
   });
 
   const validate = () => {
@@ -31,10 +31,6 @@ export default function AddQuestionModal(props) {
     };
     if (question.area === '' || question.area === "Select...") {
       setError({...error, area: 'You must assign an area.'});
-      return false;
-    };
-    if (question.group === '' || question.group === "Select...") {
-      setError({...error, group: 'You must assign a group.'});
       return false;
     };
     setError({...error, notes:'', weight:'', assessment: '', group: '', area:''});
@@ -58,7 +54,64 @@ export default function AddQuestionModal(props) {
   };
 
   const changeHandler = (e) => {
+    if(e.target.name === 'area' && e.target.value === 'OTTR') {
+      setQuestion({...question, [e.target.name]: 1});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Forecast Accuracy') {
+      setQuestion({...question, [e.target.name]: 2});
+
+    } else if(e.target.name === 'area' && e.target.value === 'MPS Attainment') {
+      setQuestion({...question, [e.target.name]: 3});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Schedule Adherence') {
+      setQuestion({...question, [e.target.name]: 4});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Supplier OTD') {
+      setQuestion({...question, [e.target.name]: 5});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Inventory Plan') {
+      setQuestion({...question, [e.target.name]: 6});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Expedited Freight') {
+      setQuestion({...question, [e.target.name]: 7});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Portfolio Review') {
+      setQuestion({...question, [e.target.name]: 8});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Demand Planning') {
+      setQuestion({...question, [e.target.name]: 9});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Supply Planning') {
+      setQuestion({...question, [e.target.name]: 10});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Reconciliation') {
+      setQuestion({...question, [e.target.name]: 11});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Exec-S&OP') {
+      setQuestion({...question, [e.target.name]: 12});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Cycle Time') {
+      setQuestion({...question, [e.target.name]: 13});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Organizational Alignment') {
+      setQuestion({...question, [e.target.name]: 14});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Training & Education') {
+      setQuestion({...question, [e.target.name]: 15});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Standardization & Continuous Improvement') {
+      setQuestion({...question, [e.target.name]: 16});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Systems Control') {
+      setQuestion({...question, [e.target.name]: 17});
+
+    } else if(e.target.name === 'area' && e.target.value === 'Systems Functionality') {
+      setQuestion({...question, [e.target.name]: 18});
+
+    } 
+     else {
     setQuestion({...question, [e.target.name]: e.target.value});
+     }
   };
 
   const handleSubmit = (e) => {
@@ -66,8 +119,15 @@ export default function AddQuestionModal(props) {
     if (!validate()) {
       return;
     }
-    console.log(question)
-    props.closeModal();
+    axios.post("http://localhost:9000/api/questions/", question )
+    .then (res => {
+      console.log(res, "Added new data")
+      props.closeModal();
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    
   }
 
   return(
@@ -106,17 +166,6 @@ export default function AddQuestionModal(props) {
               <section className="register-validation">{error.assessment}</section>
             </Form.Group>
           </Form.Row>
-          <Form.Group>
-            <Form.Label>Group</Form.Label>
-            <Form.Control as="select" name="group" onChange={changeHandler}>
-              <option>Select...</option>
-              <option>Performance Measurement</option>
-              <option>Process</option>
-              <option>Organization</option>
-              <option>Tools</option>
-            </Form.Control>
-            <section className="register-validation">{error.group}</section>
-          </Form.Group>
           <Form.Group>
             {/* Filter the areas available depending on the group selected */}
             <Form.Label>Area</Form.Label>
