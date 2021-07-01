@@ -11,7 +11,8 @@ import './AdminQuestions.scss';
 export default function AdminQuestions() {
   const [searchTerm, setSearchTerm] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [confirmationModalIsOpen, setConfirmationModalIsOpen] = useState(false);
+  const [confirmationModalIsOpen, setConfirmationModalIsOpen] = useState({open:false,
+                                                                          id: null});
   const [areas, setAreas] = useState([]);
   const [groups, setGroups] = useState([]);
   const [questionList, setQuestionList] = useState([]);
@@ -39,8 +40,12 @@ export default function AdminQuestions() {
   // Open and Close modal
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
-  const openConfirmationModal = () => setConfirmationModalIsOpen(true);
-  const closeConfirmationModal = () => setConfirmationModalIsOpen(false);
+  const openConfirmationModal = (id) => {
+    setConfirmationModalIsOpen((prev) => ({...prev, open: true, id: id}));
+  }
+  const closeConfirmationModal = () => {
+    setConfirmationModalIsOpen((prev) => ({...prev, open: false}));
+  }
 
   // Filter search results
   const filterSearch = () => {
@@ -111,7 +116,7 @@ export default function AdminQuestions() {
                         <td>{val.notes}</td>
                         <td>{val.weight}</td>
                         <td>{val.assessment}</td>
-                        <td><FontAwesomeIcon icon={faTrashAlt} onClick={openConfirmationModal}/></td>
+                        <td><FontAwesomeIcon icon={faTrashAlt} onClick={()=>openConfirmationModal(val.id)}/></td>
                       </tr>
                     )
                   }
@@ -126,7 +131,7 @@ export default function AdminQuestions() {
       closeModal={closeModal}
       modalIsOpen={modalIsOpen}/>
       }
-      {confirmationModalIsOpen &&
+      {confirmationModalIsOpen.open &&
       <DeleteConfirmation
       closeConfirmationModal={closeConfirmationModal}
       confirmationModalIsOpen={confirmationModalIsOpen}/>
