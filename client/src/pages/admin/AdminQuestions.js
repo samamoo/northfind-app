@@ -102,6 +102,7 @@ export default function AdminQuestions() {
               <th>Question</th>
               <th>Weight Factor</th>
               <th>Assessment Value</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
