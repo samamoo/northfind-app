@@ -114,7 +114,7 @@ export default function AdminQuestions() {
                       <tr key={val.id}>
                         <td>{group.name}</td>
                         <td>{area.name}</td>
-                        <td>{val.notes}</td>
+                        <td className="question-col">{val.notes}</td>
                         <td>{val.weight}</td>
                         <td>{val.assessment}</td>
                         <td><FontAwesomeIcon icon={faTrashAlt} onClick={()=>openConfirmationModal(val.id)}/></td>
