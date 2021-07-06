@@ -11,6 +11,9 @@ tr:nth-child(even) {
   background-color: #eeeeee;
 }
 .question-col {
-  text-align: left;
-  
+  text-align: left; 
+  padding: 15px;
+}
+#trash-icon {
+  cursor: pointer;
 }
