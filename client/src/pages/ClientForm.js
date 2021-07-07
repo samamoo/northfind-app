@@ -120,7 +120,7 @@ export default function ClientForm (props) {
           <Button variant="primary" type="submit" onClick={handleSubmit}>
             Submit Client
           </Button>
-          { redirect && <Redirect  to={{pathname:"/interview"}}/>}
+          { redirect && <Redirect  to={{pathname:"/question-selection"}}/>}
         </Form>
       </div>
     </main>
