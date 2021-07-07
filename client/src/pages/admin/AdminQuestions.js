@@ -113,7 +113,7 @@ export default function AdminQuestions() {
               <th>Area</th>
               <th>Question</th>
               <th>Weight Factor</th>
-              <th>Assessment Value</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -125,12 +125,11 @@ export default function AdminQuestions() {
                       <tr key={val.id}>
                         <td>{group.name}</td>
                         <td>{area.name}</td>
-                        <td>{val.notes}</td>
+                        <td className="question-col">{val.notes}</td>
                         <td>{val.weight}</td>
                         <td>{val.assessment}</td>
                         <td><FontAwesomeIcon className="pointer" icon={faEdit} onClick={()=>openEditModal(val.id,area.name,val.notes,val.weight,val.assessment)}/></td>
-                        <td><FontAwesomeIcon className="pointer" icon={faTrashAlt} onClick={()=>openConfirmationModal(val.id)}/></td>
-                       
+                        <td><FontAwesomeIcon id="trash-icon" style={{'color': '#dc3545'}} icon={faTrashAlt} onClick={()=>openConfirmationModal(val.id)}/></td>
                       </tr>
                     )
                   }

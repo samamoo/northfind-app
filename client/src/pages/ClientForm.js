@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
-import { Form, FormControl, Button, InputGroup, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Form, Button, InputGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 import axios from 'axios';
 import './ClientForm.scss';
 

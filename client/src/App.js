@@ -4,9 +4,10 @@ import AdminClient from './pages/admin/AdminClient';
 import AdminQuestions from './pages/admin/AdminQuestions';
 import Navigation from "./components/Navigation";
 import ClientForm from './pages/ClientForm';
+import Confirmation from './pages/Confirmation';
 import End from './pages/End';
 import Home from './pages/Home';
-import Interview from './pages/Interview';
+import InterviewSelection from './pages/InterviewSelection';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
@@ -28,7 +29,8 @@ function App() {
         <Route path="/profile" exact render={(props) => <Profile {...props} state={state}/>}/>
         <Route path="/register" exact component={Register}/>
         <Route path="/clientform" exact render={(props) => <ClientForm {...props} state={state}/>}/>
-        <Route path="/interview" exact component={Interview}/>
+        <Route path="/confirmation" exact component={Confirmation}/>
+        <Route path="/interview-selection" exact component={InterviewSelection}/>
         <Route path="/end" exact component={End}/>
         <Route path="/" exact component={Home}/>
         <Route path="/admin-client" exact component={AdminClient}/>

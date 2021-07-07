@@ -4,12 +4,19 @@ table {
 }
 td, th {
   border: 1px solid #dddddd;
-  text-align: left;
+  text-align: center;
   padding: 8px;
 }
 tr:nth-child(even) {
   background-color: #eeeeee;
 }
 .pointer{
+  cursor: pointer;
+}
+.question-col {
+  text-align: left; 
+  padding: 15px;
+}
+#trash-icon {
   cursor: pointer;
 }
