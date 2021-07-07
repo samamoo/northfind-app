@@ -7,7 +7,7 @@ export default function DeleteConfirmation(props) {
     const id = props.confirmationModalIsOpen.id;
     axios.post("http://localhost:9000/api/deleteQuestion", {id:id} )
     .then (res => {
-      console.log(res, "Added new data")
+      console.log(res, "Deleted data")
       props.closeConfirmationModal();
     })
     .catch(err => {

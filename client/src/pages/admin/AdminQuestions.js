@@ -4,8 +4,9 @@ import AddQuestionModal from './AddQuestionModal';
 import BackToTop from '../../components/BackToTop';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 import DeleteConfirmation from './DeleteConfirmation';
+import EditQuestionModal from  './EditQuestionModal';
 import './AdminQuestions.scss';
 
 export default function AdminQuestions() {
@@ -13,6 +14,11 @@ export default function AdminQuestions() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [confirmationModalIsOpen, setConfirmationModalIsOpen] = useState({open:false,
                                                                           id: null});
+  const [editModalIsOpen, setEditModalIsOpen] = useState({open: false,
+                                                          area:'',
+                                                          notes:'',
+                                                          weight:'',
+                                                          assessment:''});
   const [areas, setAreas] = useState([]);
   const [groups, setGroups] = useState([]);
   const [questionList, setQuestionList] = useState([]);
@@ -45,6 +51,12 @@ export default function AdminQuestions() {
   }
   const closeConfirmationModal = () => {
     setConfirmationModalIsOpen((prev) => ({...prev, open: false}));
+  }
+  const openEditModal = (id, area, notes, weight, assessment) => {
+    setEditModalIsOpen((prev) => ({...prev, open:true,id: id, area: area, notes: notes, weight:weight, assessment: assessment}));
+  }
+  const closeEditModal = () => {
+    setEditModalIsOpen((prev) => ({...prev, open: false}));
   }
 
   // Filter search results
@@ -116,7 +128,9 @@ export default function AdminQuestions() {
                         <td>{val.notes}</td>
                         <td>{val.weight}</td>
                         <td>{val.assessment}</td>
-                        <td><FontAwesomeIcon icon={faTrashAlt} onClick={()=>openConfirmationModal(val.id)}/></td>
+                        <td><FontAwesomeIcon className="pointer" icon={faEdit} onClick={()=>openEditModal(val.id,area.name,val.notes,val.weight,val.assessment)}/></td>
+                        <td><FontAwesomeIcon className="pointer" icon={faTrashAlt} onClick={()=>openConfirmationModal(val.id)}/></td>
+                       
                       </tr>
                     )
                   }
@@ -136,6 +150,12 @@ export default function AdminQuestions() {
       closeConfirmationModal={closeConfirmationModal}
       confirmationModalIsOpen={confirmationModalIsOpen}/>
       }
+      {editModalIsOpen.open &&
+      <EditQuestionModal
+      closeEditModal={closeEditModal}
+      editModalIsOpen={editModalIsOpen}/>
+      }
+      
       <BackToTop showBelow={250}/>
     </main>
   )
