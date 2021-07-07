@@ -4,7 +4,7 @@ const router = express.Router();
 module.exports = (db) => {
   // Get all questions
   router.get('/', (req, res, next) => {
-    db.query(`SELECT * FROM questions;`)
+    db.query(`SELECT * FROM questions ORDER BY area_id;`)
     .then((data) => {
       if (data) {
         res.status(200).send(data.rows);
@@ -19,7 +19,7 @@ module.exports = (db) => {
   // Get list of selected questions
   router.get('/select', (req, res, next) => {
     const questionsIds = req.query.questionsIds;
-    db.query(`SELECT * FROM questions WHERE id IN (${questionsIds})`)
+    db.query(`SELECT * FROM questions WHERE id IN (${questionsIds}) ORDER BY area_id;`)
     .then((data) => {
       res.status(200).json(data.rows)
     })
