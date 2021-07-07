@@ -26,11 +26,6 @@ export default function Confirmation(props) {
     <main className="interview">
       <h1>Confirmation your selected questions</h1>
       <div className="line"></div>
-        {/* {selectedQuestions.questions.map((val,key) => {
-          return(
-            <p key={val.id}>{val.notes}</p>
-          )
-        })} */}
       <div className="admin-questions-searchresults">
         <table>
           <thead>
