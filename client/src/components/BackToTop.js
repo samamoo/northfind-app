@@ -7,12 +7,12 @@ const useStyles = makeStyles((theme) => ({
   toTop: {
     zIndex: 10,
     position: 'fixed',
-    bottom: '5vh',
+    bottom: '14vh',
     backgroundColor: '#0078c7',
     color: '#FFF',
     "&:hover, &.Mui-focusVisible": {
       transition: '0.3s',
-      color: '#FFF', //397BA6
+      color: '#FFF', 
       backgroundColor: '#0d338f'
     },
     right: '5%',
