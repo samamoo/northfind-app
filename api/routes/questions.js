@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (db) => {
+  // Get all questions
   router.get('/', (req, res, next) => {
     db.query(`SELECT * FROM questions;`)
     .then((data) => {
@@ -15,6 +16,18 @@ module.exports = (db) => {
       res.status(500).json({ error: err.message });
     });
   });
+  // Get list of selected questions
+  router.get('/select', (req, res, next) => {
+    const questionsIds = req.query.questionsIds;
+    db.query(`SELECT * FROM questions WHERE id IN (${questionsIds})`)
+    .then((data) => {
+      res.status(200).json(data.rows)
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+  })
+  // Insert a new question
   router.post('/', (req, res) => {
     const notes = req.body.notes;
     const weight = req.body.weight;
@@ -32,7 +45,6 @@ module.exports = (db) => {
         .catch((err) => {
           res.status(500).json({ error: err.message });
         });
-    
   });
   return router;
 }
