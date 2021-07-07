@@ -7,9 +7,10 @@ import ClientForm from './pages/ClientForm';
 import Confirmation from './pages/Confirmation';
 import End from './pages/End';
 import Home from './pages/Home';
-import InterviewSelection from './pages/InterviewSelection';
+import Interview from './pages/Interview';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import QuestionSelection from './pages/QuestionSelection';
 import Register from './pages/Register';
 import {
   BrowserRouter as Router,
@@ -29,8 +30,9 @@ function App() {
         <Route path="/profile" exact render={(props) => <Profile {...props} state={state}/>}/>
         <Route path="/register" exact component={Register}/>
         <Route path="/clientform" exact render={(props) => <ClientForm {...props} state={state}/>}/>
+        <Route path="/interview" exact component={Interview}/>
         <Route path="/confirmation" exact component={Confirmation}/>
-        <Route path="/interview-selection" exact component={InterviewSelection}/>
+        <Route path="/question-selection" exact component={QuestionSelection}/>
         <Route path="/end" exact component={End}/>
         <Route path="/" exact component={Home}/>
         <Route path="/admin-client" exact component={AdminClient}/>
