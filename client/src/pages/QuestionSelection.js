@@ -4,10 +4,12 @@ import { Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import BackToTop from '../components/BackToTop';
+import DownToBottom from '../components/DownToBottom';
 import axios from 'axios';
 import './QuestionSelection.scss';
 
 export default function QuestionSelection(props) {
+  const [searchTerm, setSearchTerm] = useState("");
   const [areas, setAreas] = useState([]);
   const [groups, setGroups] = useState([]);
   const [questionList, setQuestionList] = useState([]);
@@ -64,6 +66,22 @@ export default function QuestionSelection(props) {
     setRedirect(true);
   }
 
+  const filterSearch = () => {
+    let results = [];
+    if (searchTerm === "") {
+      return questionList;
+    }
+    areas.forEach((area) => {
+      if (area.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+        let questionsByArea = questionList.filter((q) => {
+          return q.area_id === area.id;
+        })
+        results = [...results, ...questionsByArea];
+      }
+    })
+    return results;
+  }
+
   console.log(selectedQuestions, "SELECTED QUESTIONS");
   return(
     <main className="interview">
@@ -78,8 +96,9 @@ export default function QuestionSelection(props) {
             className="textfield" 
             id="outlined-basic"
             variant="outlined"
-            placeholder="Search by Area (or Group?)"
-            autoComplete='off' 
+            placeholder="Search by Area"
+            autoComplete='off'
+            onChange={event => {setSearchTerm(event.target.value)}} 
             >
             </input> 
           </span>
@@ -89,29 +108,29 @@ export default function QuestionSelection(props) {
           <table>
             <thead>
               <tr>
+                <th>Select</th>
                 <th>Group</th>
                 <th>Area</th>
                 <th>Question</th>
-                <th>Select</th>
                 {/* <th>Score</th>
                 <th style={{"width": "20%"}}>Additional Notes</th> */}
               </tr>
             </thead>
             <tbody>
-            {questionList.map((val, key) => {
+            {filterSearch().map((val, key) => {
                 for (const area of areas) {
                   for (const group of groups) {
                     if (val.area_id === area.id && area.group_id === group.id) {
                       return (
                         <tr key={val.id}>
-                          <td>{group.name}</td>
-                          <td>{area.name}</td>
-                          <td className="question-col" >{val.notes}</td>
                           <td>
                           <Form.Group controlId="formBasicCheckbox">
                             <Form.Check type="checkbox" aria-label="option 1" value={val.id} onChange={changeHandler}/>
                           </Form.Group>
                           </td>
+                          <td>{group.name}</td>
+                          <td>{area.name}</td>
+                          <td className="question-col" >{val.notes}</td>
                           {/* <td>
                           <Form.Group>
                               <Form.Control as="select" size="sm">
@@ -149,6 +168,7 @@ export default function QuestionSelection(props) {
         </div>
       </Form>
       <BackToTop showBelow={250}/>
+      <DownToBottom showBelow={250}/>
     </main>
   )
 }

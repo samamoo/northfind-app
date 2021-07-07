@@ -5,6 +5,7 @@ import axios from 'axios';
 import './AdminClient.scss';
 import AddClientModal from './AddClientModal';
 import BackToTop from '../../components/BackToTop';
+import DownToBottom from '../../components/DownToBottom';
 
 export default function AdminClient () {
   const [searchTerm, setSearchTerm] = useState("");
@@ -85,6 +86,7 @@ export default function AdminClient () {
           addNewCompany={addNewCompany}/>
         }
         <BackToTop showBelow={250}/>
+        <DownToBottom showBelow={250}/>
     </main>
   )
 }

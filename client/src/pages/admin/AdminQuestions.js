@@ -2,6 +2,7 @@ import React , { useState, useEffect } from 'react';
 import { Modal, Button, Form, FormControl } from 'react-bootstrap'
 import AddQuestionModal from './AddQuestionModal';
 import BackToTop from '../../components/BackToTop';
+import DownToBottom from '../../components/DownToBottom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -98,7 +99,7 @@ export default function AdminQuestions() {
           className="textfield" 
           id="outlined-basic"
           variant="outlined"
-          placeholder="Search by Area (or Group?)"
+          placeholder="Search by Area"
           autoComplete='off' 
           onChange={event => {setSearchTerm(event.target.value)}}>
           </input> 
@@ -154,8 +155,8 @@ export default function AdminQuestions() {
       closeEditModal={closeEditModal}
       editModalIsOpen={editModalIsOpen}/>
       }
-      
       <BackToTop showBelow={250}/>
+      <DownToBottom showBelow={250}/>
     </main>
   )
 }
