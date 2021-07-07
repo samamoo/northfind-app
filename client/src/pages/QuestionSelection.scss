@@ -1,0 +1,33 @@
+.interview {
+  display: flex;
+  flex-direction: column;
+  margin-top: 130px;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.interview-banner {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.interview-searchbar-content {
+  display: flex;
+
+  p {
+    margin-top: 10px;
+    margin-right: 20px;
+  }
+
+  .textfield {
+    width: 400px;
+    height: 40px;
+  }
+}
+.interview-next {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
