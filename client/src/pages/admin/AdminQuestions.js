@@ -110,12 +110,12 @@ export default function AdminQuestions() {
         <table>
           <thead>
             <tr>
-              <th>Group</th>
-              <th>Area</th>
-              <th>Question</th>
-              <th>Weight Factor</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              <th className="table-heading">Group</th>
+              <th className="table-heading">Area</th>
+              <th className="table-heading">Question</th>
+              <th className="table-heading">Weight Factor</th>
+              <th className="table-heading">Edit</th>
+              <th className="table-heading">Delete</th>
             </tr>
           </thead>
           <tbody>
