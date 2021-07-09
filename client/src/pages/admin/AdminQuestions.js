@@ -48,13 +48,13 @@ export default function AdminQuestions() {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
   const openConfirmationModal = (id) => {
-    setConfirmationModalIsOpen((prev) => ({...prev, open: true, id: id}));
+    setConfirmationModalIsOpen((prev) => ({...prev, open: true, id}));
   }
   const closeConfirmationModal = () => {
     setConfirmationModalIsOpen((prev) => ({...prev, open: false}));
   }
   const openEditModal = (id, area, notes, weight, assessment) => {
-    setEditModalIsOpen((prev) => ({...prev, open:true,id: id, area: area, notes: notes, weight:weight, assessment: assessment}));
+    setEditModalIsOpen((prev) => ({...prev, open:true, id, area, notes, weight,  assessment}));
   }
   const closeEditModal = () => {
     setEditModalIsOpen((prev) => ({...prev, open: false}));
