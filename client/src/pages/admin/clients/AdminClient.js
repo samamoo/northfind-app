@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Form, FormControl } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import './AdminClient.scss';
 import AddClientModal from './AddClientModal';
 import DeleteClientModal from './DeleteClientModal';
+import EditClientModal from './EditClientModal';
 import BackToTop from '../../../components/BackToTop';
 import DownToBottom from '../../../components/DownToBottom';
+import './AdminClient.scss';
 
 export default function AdminClient () {
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,7 +15,13 @@ export default function AdminClient () {
   const [deleteModalIsOpen, setDeleteModalIsOpen] = useState({
     open: false,
     id: null,
+    companyName: '',
   });
+  const [editModalIsOpen, setEditModalIsOpen] = useState({
+    open: false,
+    id: null,
+    companyName: '',
+  })
   const [companyList, setCompanyList] = useState( {
     companies: []
   });
@@ -24,7 +30,6 @@ export default function AdminClient () {
   useEffect(() => {
     axios.get('http://localhost:9000/api/company/')
     .then(res => {
-      console.log("Update")
       setCompanyList((prev) => ({...prev, companies: res.data}))
     })
   },[]);
@@ -33,8 +38,13 @@ export default function AdminClient () {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
   // Open and Close Delete modal
-  const openDeleteModal = (id) => {setDeleteModalIsOpen((prev) => ({...prev, open: true, id}))};
-  const closeDeleteModal = () => setDeleteModalIsOpen(false);
+  const openDeleteModal = (id, companyName) => {
+    setDeleteModalIsOpen((prev) => ({...prev, open: true, id, companyName}))};
+  const closeDeleteModal = () => setDeleteModalIsOpen((prev) => ({...prev, open: false,id: null, companyName: '', }));
+  // Open and Close Edit modal
+  const openEditModal = (id, companyName) => {
+    setEditModalIsOpen((prev) => ({...prev, open: true, id, companyName}))};
+  const closeEditModal = () => setEditModalIsOpen((prev) => ({...prev, open: false,id: null, companyName: '', }));
 
   // Filter the search results
   const filterSearch = () => {
@@ -61,6 +71,7 @@ export default function AdminClient () {
       console.log(err);
     })
   };
+  // Delete a company and update companyList
   const deleteCompany = (id) => {
     axios.post("http://localhost:9000/api/company/delete", {id} )
     .then ((res) => {
@@ -71,6 +82,17 @@ export default function AdminClient () {
       console.log(err);
     })
   };
+  // Edit a company and update companyList
+  const editCompany = (company) => {
+    axios.post("http://localhost:9000/api/company/edit", company )
+    .then((res) => {
+      const newList = res.data;
+      setCompanyList((prev) => ({...prev, companies: newList}))
+    })
+    .catch(err => {
+      console.log(err);
+    })
+  }
 
   return(
     <main className="admin-client">
@@ -107,28 +129,34 @@ export default function AdminClient () {
               return(
                 <tr>
                   <td key={val.id}>{val.company_name}</td>
-                  <td style={{'width': '10%'}}><FontAwesomeIcon id="edit-icon" style={{'color': '#037ffc'}} icon={faEdit}/></td>
-                  <td style={{'width': '10%'}}><FontAwesomeIcon id="trash-icon" style={{'color': '#dc3545'}} icon={faTrashAlt} onClick={() => openDeleteModal(val.id)}/></td>
+                  <td style={{'width': '10%'}}><FontAwesomeIcon id="edit-icon" style={{'color': '#037ffc'}} icon={faEdit} onClick={() => openEditModal(val.id, val.company_name)}/></td>
+                  <td style={{'width': '10%'}}><FontAwesomeIcon id="trash-icon" style={{'color': '#dc3545'}} icon={faTrashAlt} onClick={() => openDeleteModal(val.id, val.company_name)}/></td>
                 </tr>
               )
             })}
           </tbody>
         </table>
       </div>
-        {deleteModalIsOpen &&
-          <DeleteClientModal 
-          closeDeleteModal={closeDeleteModal}
-          deleteModalIsOpen={deleteModalIsOpen}
-          deleteCompany={deleteCompany}/>
-        }
-        {modalIsOpen && 
-          <AddClientModal 
-          closeModal={closeModal} 
-          modalIsOpen={modalIsOpen}
-          addNewCompany={addNewCompany}/>
-        }
-        <BackToTop showBelow={250}/>
-        <DownToBottom showBelow={250}/>
+      {modalIsOpen && 
+        <AddClientModal 
+        closeModal={closeModal} 
+        modalIsOpen={modalIsOpen}
+        addNewCompany={addNewCompany}/>
+      }
+      {deleteModalIsOpen.open &&
+        <DeleteClientModal 
+        closeDeleteModal={closeDeleteModal}
+        deleteModalIsOpen={deleteModalIsOpen}
+        deleteCompany={deleteCompany}/>
+      }
+      {editModalIsOpen.open &&
+      <EditClientModal
+      closeEditModal={closeEditModal}
+      editModalIsOpen={editModalIsOpen}
+      editCompany={editCompany}/>
+      }
+      <BackToTop showBelow={250}/>
+      <DownToBottom showBelow={250}/>
     </main>
   )
 }
