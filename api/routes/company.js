@@ -34,8 +34,23 @@ module.exports = (db) => {
   // Delete a company
   router.post('/delete', (req, res) => {
     const id = req.body.id;
-    console.log(id)
-    db.query(`Delete from companies where id = ($1) RETURNING *;`, [id])
+    db.query(`DELETE FROM companies WHERE id = ($1) RETURNING *;`, [id])
+    .then(() => {
+      db.query(`SELECT * FROM companies ORDER BY company_name;`)
+      .then((data) => {
+        const list = data.rows;
+        res.status(200).send(list);
+      })
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+  });
+  // Edit a company
+  router.post('/edit', (req, res) => {
+    const company_name = req.body.companyName;
+    const id = req.body.id;
+    db.query(`UPDATE companies SET company_name = ($1) WHERE id = ($2) RETURNING *;`, [company_name, id])
     .then(() => {
       db.query(`SELECT * FROM companies ORDER BY company_name;`)
       .then((data) => {
