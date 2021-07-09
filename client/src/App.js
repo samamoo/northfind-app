@@ -1,6 +1,6 @@
 import React from 'react';
 import useApplicationData from './hooks/useApplicationData';
-import AdminClient from './pages/admin/AdminClient';
+import AdminClient from './pages/admin/clients/AdminClient';
 import AdminQuestions from './pages/admin/AdminQuestions';
 import Navigation from "./components/Navigation";
 import ClientForm from './pages/ClientForm';
