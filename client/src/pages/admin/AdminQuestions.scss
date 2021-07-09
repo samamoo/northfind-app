@@ -7,8 +7,8 @@ td, th {
   text-align: center;
   padding: 8px;
 }
-tr:nth-child(even) {
-  background-color: #eeeeee;
+tr:nth-child(odd) {
+  background-color: #e8f3ff;
 }
 #edit-icon{
   cursor: pointer;
@@ -22,4 +22,5 @@ tr:nth-child(even) {
 }
 .table-heading {
   text-align: center;
+  background-color: #ffffff;
 }
