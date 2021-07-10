@@ -3,17 +3,22 @@ import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 
 export default function Confirmation(props) {
   const [selectedQuestions, setSelectedQuestions] = useState({
     questions: []}
   )
+  const [redirect, setRedirect] = useState(false)
+
   const questionsIds = props.location.state.questions;
   const areas = props.location.state.areas;
   const groups = props.location.state.groups;
-  console.log(areas);
-  console.log(groups);
+
+ const changeRedirect = () => {
+    setRedirect(!redirect);
+  };
 
   useEffect(() => {
     axios.get('http://localhost:9000/api/questions/select', {params: {questionsIds}})
@@ -55,8 +60,9 @@ export default function Confirmation(props) {
         </table>
       </div>
       <div className="interview-next py-5">
-          <Button  variant="primary" type="button">Start Interview
+          <Button onClick={changeRedirect} variant="primary" type="button">Start Interview
           <FontAwesomeIcon id="arrow-right" style={{'margin-left': '10px'}} icon={faArrowRight}/></Button>
+          {redirect && <Redirect to={{pathname:"/interview", state: { questions: selectedQuestions, areas, groups}}}/>}
       </div>
     </main>
   )
