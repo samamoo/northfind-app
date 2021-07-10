@@ -48,13 +48,13 @@ export default function AdminQuestions() {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
   const openConfirmationModal = (id) => {
-    setConfirmationModalIsOpen((prev) => ({...prev, open: true, id: id}));
+    setConfirmationModalIsOpen((prev) => ({...prev, open: true, id}));
   }
   const closeConfirmationModal = () => {
     setConfirmationModalIsOpen((prev) => ({...prev, open: false}));
   }
   const openEditModal = (id, area, notes, weight, assessment) => {
-    setEditModalIsOpen((prev) => ({...prev, open:true,id: id, area: area, notes: notes, weight:weight, assessment: assessment}));
+    setEditModalIsOpen((prev) => ({...prev, open:true, id, area, notes, weight,  assessment}));
   }
   const closeEditModal = () => {
     setEditModalIsOpen((prev) => ({...prev, open: false}));
@@ -110,12 +110,12 @@ export default function AdminQuestions() {
         <table>
           <thead>
             <tr>
-              <th>Group</th>
-              <th>Area</th>
-              <th>Question</th>
-              <th>Weight Factor</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              <th className="table-heading">Group</th>
+              <th className="table-heading">Area</th>
+              <th className="table-heading">Question</th>
+              <th className="table-heading">Weight Factor</th>
+              <th className="table-heading">Edit</th>
+              <th className="table-heading">Delete</th>
             </tr>
           </thead>
           <tbody>

@@ -21,7 +21,7 @@ export default function DeleteConfirmation(props) {
 
         </Modal.Header>
         <Modal.Body>
-        <div>Are you sure you want to delete?</div>
+        <div>Are you sure you want to delete this question?</div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.closeConfirmationModal}>Cancel</Button>
