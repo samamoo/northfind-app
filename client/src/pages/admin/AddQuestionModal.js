@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Col, Button, Form, FormControl } from 'react-bootstrap';
-import axios from 'axios';
+import { Modal, Col, Button, Form } from 'react-bootstrap';
 
 export default function AddQuestionModal(props) {
   const [error, setError] = useState({
@@ -119,15 +118,8 @@ export default function AddQuestionModal(props) {
     if (!validate()) {
       return;
     }
-    axios.post("http://localhost:9000/api/questions/", question )
-    .then (res => {
-      console.log(res, "Added new data")
-      props.closeModal();
-    })
-    .catch(err => {
-      console.log(err);
-    })
-    
+    props.addQuestion(question);
+    props.closeModal();
   }
 
   return(

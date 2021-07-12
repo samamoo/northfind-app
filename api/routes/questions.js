@@ -34,17 +34,38 @@ module.exports = (db) => {
     const assessment = req.body.assessment;
     const area_id = req.body.area;
     const arrayParams = [notes, weight, assessment, area_id];
-   
-      db.query(
-        `Insert into questions (notes,weight,assessment,area_id) values($1, $2, $3, $4);`,
-        arrayParams
-      )
-        .then((data) => {
-         console.log(data);
-        })
-        .catch((err) => {
-          res.status(500).json({ error: err.message });
-        });
+    db.query(
+      `INSERT INTO questions (notes,weight,assessment,area_id) VALUES($1, $2, $3, $4);`,
+      arrayParams
+    )
+    .then(() => {
+      db.query(`SELECT * FROM questions ORDER BY area_id;`)
+      .then((data) => {
+        const list = data.rows;
+        res.status(200).send(list)
+      })
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+  });
+  // Delete a question
+  router.post('/delete', (req, res) => {
+    const id = req.body.id;
+    db.query(
+      `Delete from questions where id = ${id};`
+    )
+    .then(() => {
+      db.query(`SELECT * FROM questions ORDER BY area_id;`)
+      .then((data) => {
+        console.log("Deleted!")
+        const list = data.rows;
+        res.status(200).send(list);
+      })
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
   });
   return router;
 }
