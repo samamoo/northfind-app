@@ -3,17 +3,12 @@ import { Modal, Col, Button, Form, FormControl } from 'react-bootstrap';
 import axios from 'axios';
 
 export default function DeleteConfirmation(props) {
-  const deleteRecord = () => {
-    const id = props.confirmationModalIsOpen.id;
-    axios.post("http://localhost:9000/api/deleteQuestion", {id:id} )
-    .then (res => {
-      console.log(res, "Deleted data")
-      props.closeConfirmationModal();
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    props.deleteQuestion(props.confirmationModalIsOpen.id);
+    props.closeConfirmationModal();
+  }
   return(
     <Modal show={props.confirmationModalIsOpen.open} onHide={props.closeConfirmationModal}>
         <Modal.Header>
@@ -25,7 +20,7 @@ export default function DeleteConfirmation(props) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.closeConfirmationModal}>Cancel</Button>
-          <Button variant="primary" onClick={deleteRecord}>Delete</Button>
+          <Button variant="primary" onClick={handleSubmit}>Delete</Button>
         </Modal.Footer>
      
     </Modal>
