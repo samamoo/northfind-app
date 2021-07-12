@@ -18,7 +18,6 @@ module.exports = (db) => {
   // Add a new company
   router.post('/', (req, res) => {
     const company = req.body.companyName
-    console.log(req.body.companyName)
     db.query(`INSERT INTO companies (company_name) VALUES ($1);`,[company])
     .then(() => {
       db.query(`SELECT * FROM companies ORDER BY company_name;`)

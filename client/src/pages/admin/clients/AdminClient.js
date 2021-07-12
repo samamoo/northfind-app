@@ -92,7 +92,7 @@ export default function AdminClient () {
     .catch(err => {
       console.log(err);
     })
-  }
+  };
 
   return(
     <main className="admin-client">
