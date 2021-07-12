@@ -71,7 +71,6 @@ export default function ClientForm (props) {
       const clientId = res.data.id;
       const userId = user.id;
       const session = { clientId, userId}
-      console.log(session, "session")
       // Create an interview session
       axios.post("http://localhost:9000/api/interview", session)
       .then (() => {
