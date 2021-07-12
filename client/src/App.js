@@ -1,7 +1,8 @@
 import React from 'react';
 import useApplicationData from './hooks/useApplicationData';
 import AdminClient from './pages/admin/clients/AdminClient';
-import AdminQuestions from './pages/admin/AdminQuestions';
+import AdminQuestions from './pages/admin/questions/AdminQuestions';
+import AdminDashboard from './pages/admin/AdminDashboard';
 import Navigation from "./components/Navigation";
 import ClientForm from './pages/ClientForm';
 import Confirmation from './pages/Confirmation';
@@ -37,6 +38,7 @@ function App() {
         <Route path="/" exact component={Home}/>
         <Route path="/admin-client" exact component={AdminClient}/>
         <Route path="/admin-questions" exact component={AdminQuestions}/>
+        <Route path="/admin-dashboard" exact component={AdminDashboard}/>
       </Switch>
     </Router>
   );

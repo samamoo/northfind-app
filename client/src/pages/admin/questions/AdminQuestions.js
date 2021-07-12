@@ -1,8 +1,8 @@
 import React , { useState, useEffect } from 'react';
 import { Modal, Button, Form, FormControl } from 'react-bootstrap'
 import AddQuestionModal from './AddQuestionModal';
-import BackToTop from '../../components/BackToTop';
-import DownToBottom from '../../components/DownToBottom';
+import BackToTop from '../../../components/BackToTop';
+import DownToBottom from '../../../components/DownToBottom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
