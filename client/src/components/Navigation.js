@@ -15,7 +15,7 @@ export default function Navigation (props) {
           {/* <Nav.Link href="#features">Features</Nav.Link>
           <Nav.Link href="#pricing">Pricing</Nav.Link> */}
           <NavDropdown title="Admin" id="collasible-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Dashboard</NavDropdown.Item>
+            <NavDropdown.Item href="/admin-dashboard">Dashboard</NavDropdown.Item>
             <NavDropdown.Item href="/admin-client">Clients</NavDropdown.Item>
             <NavDropdown.Item href="/admin-questions">Interview Questions</NavDropdown.Item>
             <NavDropdown.Divider />
