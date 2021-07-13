@@ -16,6 +16,7 @@ export default function QuestionSelection(props) {
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [redirect, setRedirect] = useState(false);
   const [error, setError] = useState('')
+  const sessionId = props.location.state.session_id;
   useEffect(() => {
     axios.get('http://localhost:9000/api/questions/')
     .then(res => {
@@ -164,7 +165,7 @@ export default function QuestionSelection(props) {
           <Button  variant="primary" type="submit" onClick={handleSubmit}>Next
           <FontAwesomeIcon id="arrow-right" style={{'margin-left': '10px'}} icon={faArrowRight}/></Button>
           {/* if selectedQuestions != [], set redirect to true, else set error */}
-          { redirect && <Redirect to={{pathname:"/confirmation", state: { questions: selectedQuestions, areas, groups}}}/>}
+          { redirect && <Redirect to={{pathname:"/confirmation", state: { questions: selectedQuestions, areas, groups, sessionId}}}/>}
         </div>
       </Form>
       <BackToTop showBelow={250}/>

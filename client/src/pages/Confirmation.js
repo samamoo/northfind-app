@@ -15,7 +15,7 @@ export default function Confirmation(props) {
   const questionsIds = props.location.state.questions;
   const areas = props.location.state.areas;
   const groups = props.location.state.groups;
-
+  const sessionId = props.location.state.sessionId;
  const changeRedirect = () => {
     setRedirect(!redirect);
   };
@@ -62,7 +62,7 @@ export default function Confirmation(props) {
       <div className="interview-next py-5">
           <Button onClick={changeRedirect} variant="primary" type="button">Start Interview
           <FontAwesomeIcon id="arrow-right" style={{'margin-left': '10px'}} icon={faArrowRight}/></Button>
-          {redirect && <Redirect to={{pathname:"/interview", state: { questions: selectedQuestions, areas, groups}}}/>}
+          {redirect && <Redirect to={{pathname:"/interview", state: { questions: selectedQuestions, areas, groups, sessionId}}}/>}
       </div>
     </main>
   )

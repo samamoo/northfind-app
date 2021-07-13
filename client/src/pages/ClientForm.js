@@ -5,8 +5,10 @@ import axios from 'axios';
 import './ClientForm.scss';
 
 export default function ClientForm (props) {
+  let clientId;
   const user = props.state.userData;
   const [redirect, setRedirect] = useState(false);
+  const [session_id, setSession_id] = useState(null);
   const [client, setClient] = useState({
       firstName: '',
       lastName: '',
@@ -68,13 +70,14 @@ export default function ClientForm (props) {
     // Create a new client
     axios.post("http://localhost:9000/api/clients/", client )
     .then ((res) => {
-      const clientId = res.data.id;
+      clientId = res.data.id;
       const userId = user.id;
       const session = { clientId, userId}
       console.log(session, "session")
       // Create an interview session
       axios.post("http://localhost:9000/api/interview", session)
-      .then (() => {
+      .then ((res) => {
+        setSession_id(res.data.id);
         setRedirect(true);
       })
     })
@@ -120,7 +123,7 @@ export default function ClientForm (props) {
           <Button variant="primary" type="submit" onClick={handleSubmit}>
             Submit Client
           </Button>
-          { redirect && <Redirect  to={{pathname:"/question-selection"}}/>}
+          { redirect && <Redirect  to={{pathname:"/question-selection", state:{session_id}}}/>}
         </Form>
       </div>
     </main>
