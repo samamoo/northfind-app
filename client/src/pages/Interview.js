@@ -8,7 +8,7 @@ import { Form } from 'react-bootstrap';
 
 
 export default function Interview(props) {
-  let temp = [];
+  let temp;
   const [sessionQuestion, setSessionQuestion] = useState({
     questionId:null,
     sessionId:null,
@@ -33,8 +33,17 @@ export default function Interview(props) {
  
     setRedirect(!redirect);
   };
- const changeHandler = (id,e) => {
+  const findQuestion = (id) => {
+    let question = sessionQuestionList.questions.filter(val => val.questionId === id);
+    if(question.length === 0){
+      return false;
+    } 
+    return true;
    
+  }
+ 
+ const changeHandler = (id,e) => {
+   console.log(e.target.name,e.target.value);
    for(let val of questionsIds.questions) {
      if(val.id === id){
        let score;
@@ -46,10 +55,28 @@ export default function Interview(props) {
       }
      }
    }
-   if(sessionQuestion.comments !== '' || sessionQuestion.score !== null || sessionQuestion.assessment !== null) {
-     temp.push(sessionQuestion);
-     setSessionQuestionList((prev) => ({...prev, questions:temp}))
+   if(sessionQuestion.comments !== '' && sessionQuestion.score !== null && sessionQuestion.assessment !== null) {
+     if(sessionQuestionList.questions.length === 0) {
+       sessionQuestionList.questions.push(sessionQuestion);
+     }
+     if(!findQuestion(id)) {
+       console.log('im here')
+       setSessionQuestionList((prev) => ({...prev, questions: [...sessionQuestionList.questions, sessionQuestion]}))
+     } else {
+       console.log('i m here')
+       console.log(sessionQuestion);
+      for(let val of sessionQuestionList.questions) {
+        if(val.questionId === id) {
+          console.log('i m here2')
+
+          val.comments = sessionQuestion.comments;
+          val.assessment = sessionQuestion.assessment;
+          val.score = sessionQuestion.score;
+        }
+      }
+     }
    }
+ 
    console.log(sessionQuestionList);
  }
  
@@ -92,7 +119,7 @@ export default function Interview(props) {
                         </tr>
                         <tr >
                         <td colSpan='2'>   
-                        <Form.Control placeholder='Please write your comments here'  onChange={(e) =>changeHandler(val.id, e)} name="comments" as="input" autoComplete="off" />
+                        <Form.Control placeholder='Please write your comments here'  onChange={(e) =>changeHandler(val.id, e)} type='text' name="comments" as="input"/>
                         </td>
                         </tr>
                        
