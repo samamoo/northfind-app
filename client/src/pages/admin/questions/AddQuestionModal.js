@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import { Modal, Col, Button, Form, FormControl } from 'react-bootstrap';
-import axios from 'axios';
+import { Modal, Col, Button, Form } from 'react-bootstrap';
 
 export default function AddQuestionModal(props) {
   const [error, setError] = useState({
     notes:'',
     weight: '',
-    assessment: '',
     area: '',
   })
   const [question, setQuestion] = useState({
     notes: '',
     weight: 0,
-    assessment: 0,
     area: '',
   });
 
@@ -25,15 +22,11 @@ export default function AddQuestionModal(props) {
       setError({...error, weight: 'You must set a weigth factor.'});
       return false;
     };
-    if (question.assessment === 0 || question.assessment === "Select...") {
-      setError({...error, assessment: 'You must set an assessment value.'});
-      return false;
-    };
     if (question.area === '' || question.area === "Select...") {
       setError({...error, area: 'You must assign an area.'});
       return false;
     };
-    setError({...error, notes:'', weight:'', assessment: '', group: '', area:''});
+    setError({...error, notes:'', weight:'', area:'',});
     return true;
   }
 
@@ -119,15 +112,8 @@ export default function AddQuestionModal(props) {
     if (!validate()) {
       return;
     }
-    axios.post("http://localhost:9000/api/questions/", question )
-    .then (res => {
-      console.log(res, "Added new data")
-      props.closeModal();
-    })
-    .catch(err => {
-      console.log(err);
-    })
-    
+    props.addQuestion(question);
+    props.closeModal();
   }
 
   return(
@@ -152,18 +138,6 @@ export default function AddQuestionModal(props) {
                 <option>5</option>
               </Form.Control>
               <section className="register-validation">{error.weight}</section>
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Label>Assessment Value</Form.Label>
-              <Form.Control name="assessment" as="select" onChange={selection}>
-                <option>Select...</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </Form.Control>
-              <section className="register-validation">{error.assessment}</section>
             </Form.Group>
           </Form.Row>
           <Form.Group>
@@ -192,6 +166,7 @@ export default function AddQuestionModal(props) {
             </Form.Control>
             <section className="register-validation">{error.area}</section>
           </Form.Group>
+          
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.closeModal}>Cancel</Button>

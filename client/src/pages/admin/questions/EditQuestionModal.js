@@ -6,14 +6,13 @@ export default function EditQuestionModal(props) {
   const [error, setError] = useState({
     notes:'',
     weight: '',
-    assessment: '',
     area: '',
   })
   const [question, setQuestion] = useState({
-    notes: '',
-    weight: 0,
-    assessment: 0,
-    area: '',
+    notes: props.editModalIsOpen.notes,
+    weight: props.editModalIsOpen.weight,
+    area: props.editModalIsOpen.area,
+    id: props.editModalIsOpen.id,
   });
 
   const validate = () => {
@@ -25,15 +24,11 @@ export default function EditQuestionModal(props) {
       setError({...error, weight: 'You must set a weigth factor.'});
       return false;
     };
-    if ((question.assessment === 0 || question.assessment === "Select...") && props.editModalIsOpen.assessment === 0) {
-      setError({...error, assessment: 'You must set an assessment value.'});
-      return false;
-    };
     if ((question.area === '' || question.area === "Select...") && props.editModalIsOpen.area === '') {
       setError({...error, area: 'You must assign an area.'});
       return false;
     };
-    setError({...error, notes:'', weight:'', assessment: '', group: '', area:''});
+    setError({...error, notes:'', weight:'', group: '', area:''});
     return true;
   }
 
@@ -54,64 +49,64 @@ export default function EditQuestionModal(props) {
   };
 
   const changeHandler = (e) => {
-    if(e.target.name === 'area' && e.target.value === 'OTTR') {
-      setQuestion({...question, [e.target.name]: 1});
+    // if(e.target.name === 'area' && e.target.value === 'OTTR') {
+    //   setQuestion({...question, [e.target.name]: 1});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Forecast Accuracy') {
-      setQuestion({...question, [e.target.name]: 2});
+    // } else if(e.target.name === 'area' && e.target.value === 'Forecast Accuracy') {
+    //   setQuestion({...question, [e.target.name]: 2});
 
-    } else if(e.target.name === 'area' && e.target.value === 'MPS Attainment') {
-      setQuestion({...question, [e.target.name]: 3});
+    // } else if(e.target.name === 'area' && e.target.value === 'MPS Attainment') {
+    //   setQuestion({...question, [e.target.name]: 3});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Schedule Adherence') {
-      setQuestion({...question, [e.target.name]: 4});
+    // } else if(e.target.name === 'area' && e.target.value === 'Schedule Adherence') {
+    //   setQuestion({...question, [e.target.name]: 4});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Supplier OTD') {
-      setQuestion({...question, [e.target.name]: 5});
+    // } else if(e.target.name === 'area' && e.target.value === 'Supplier OTD') {
+    //   setQuestion({...question, [e.target.name]: 5});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Inventory Plan') {
-      setQuestion({...question, [e.target.name]: 6});
+    // } else if(e.target.name === 'area' && e.target.value === 'Inventory Plan') {
+    //   setQuestion({...question, [e.target.name]: 6});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Expedited Freight') {
-      setQuestion({...question, [e.target.name]: 7});
+    // } else if(e.target.name === 'area' && e.target.value === 'Expedited Freight') {
+    //   setQuestion({...question, [e.target.name]: 7});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Portfolio Review') {
-      setQuestion({...question, [e.target.name]: 8});
+    // } else if(e.target.name === 'area' && e.target.value === 'Portfolio Review') {
+    //   setQuestion({...question, [e.target.name]: 8});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Demand Planning') {
-      setQuestion({...question, [e.target.name]: 9});
+    // } else if(e.target.name === 'area' && e.target.value === 'Demand Planning') {
+    //   setQuestion({...question, [e.target.name]: 9});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Supply Planning') {
-      setQuestion({...question, [e.target.name]: 10});
+    // } else if(e.target.name === 'area' && e.target.value === 'Supply Planning') {
+    //   setQuestion({...question, [e.target.name]: 10});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Reconciliation') {
-      setQuestion({...question, [e.target.name]: 11});
+    // } else if(e.target.name === 'area' && e.target.value === 'Reconciliation') {
+    //   setQuestion({...question, [e.target.name]: 11});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Exec-S&OP') {
-      setQuestion({...question, [e.target.name]: 12});
+    // } else if(e.target.name === 'area' && e.target.value === 'Exec-S&OP') {
+    //   setQuestion({...question, [e.target.name]: 12});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Cycle Time') {
-      setQuestion({...question, [e.target.name]: 13});
+    // } else if(e.target.name === 'area' && e.target.value === 'Cycle Time') {
+    //   setQuestion({...question, [e.target.name]: 13});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Organizational Alignment') {
-      setQuestion({...question, [e.target.name]: 14});
+    // } else if(e.target.name === 'area' && e.target.value === 'Organizational Alignment') {
+    //   setQuestion({...question, [e.target.name]: 14});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Training & Education') {
-      setQuestion({...question, [e.target.name]: 15});
+    // } else if(e.target.name === 'area' && e.target.value === 'Training & Education') {
+    //   setQuestion({...question, [e.target.name]: 15});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Standardization & Continuous Improvement') {
-      setQuestion({...question, [e.target.name]: 16});
+    // } else if(e.target.name === 'area' && e.target.value === 'Standardization & Continuous Improvement') {
+    //   setQuestion({...question, [e.target.name]: 16});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Systems Control') {
-      setQuestion({...question, [e.target.name]: 17});
+    // } else if(e.target.name === 'area' && e.target.value === 'Systems Control') {
+    //   setQuestion({...question, [e.target.name]: 17});
 
-    } else if(e.target.name === 'area' && e.target.value === 'Systems Functionality') {
-      setQuestion({...question, [e.target.name]: 18});
+    // } else if(e.target.name === 'area' && e.target.value === 'Systems Functionality') {
+    //   setQuestion({...question, [e.target.name]: 18});
 
-    } 
-     else {
+    // } 
+    //  else {
+    // }
     setQuestion({...question, [e.target.name]: e.target.value});
-     }
     
   };
 
@@ -120,25 +115,8 @@ export default function EditQuestionModal(props) {
     if (!validate()) {
       return;
     }
-    for(let item in question) {
-      console.log(item);
-      if(question[item] === "" || question[item] === 0) {
-        question[item] = props.editModalIsOpen[item];
-        console.log(question[item], props.editModalIsOpen[item])
-      }
-    }
-    console.log(question);
-    console.log(props.id);
-    axios.post("http://localhost:9000/api/editQuestion/", {question: question, id:props.editModalIsOpen.id} )
-    .then (res => {
-      console.log(res, "Edited new data")
-      props.closeEditModal();
-      console.log(props.editModalIsOpen);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-    
+    props.editQuestion(question);
+    props.closeEditModal();    
   }
 
   return(
@@ -163,18 +141,6 @@ export default function EditQuestionModal(props) {
                 <option>5</option>
               </Form.Control>
               <section className="register-validation">{error.weight}</section>
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Label>Assessment Value</Form.Label>
-              <Form.Control name="assessment" defaultValue={props.editModalIsOpen.assessment} as="select" onChange={selection}>
-                <option>Select...</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </Form.Control>
-              <section className="register-validation">{error.assessment}</section>
             </Form.Group>
           </Form.Row>
           <Form.Group>

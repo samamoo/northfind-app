@@ -1,8 +1,8 @@
 import React , { useState, useEffect } from 'react';
 import { Modal, Button, Form, FormControl } from 'react-bootstrap'
 import AddQuestionModal from './AddQuestionModal';
-import BackToTop from '../../components/BackToTop';
-import DownToBottom from '../../components/DownToBottom';
+import BackToTop from '../../../components/BackToTop';
+import DownToBottom from '../../../components/DownToBottom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +19,7 @@ export default function AdminQuestions() {
                                                           area:'',
                                                           notes:'',
                                                           weight:'',
-                                                          assessment:''});
+                                                          id: null});
   const [areas, setAreas] = useState([]);
   const [groups, setGroups] = useState([]);
   const [questionList, setQuestionList] = useState([]);
@@ -51,13 +51,13 @@ export default function AdminQuestions() {
     setConfirmationModalIsOpen((prev) => ({...prev, open: true, id}));
   }
   const closeConfirmationModal = () => {
-    setConfirmationModalIsOpen((prev) => ({...prev, open: false}));
+    setConfirmationModalIsOpen((prev) => ({...prev, open: false, id: null}));
   }
-  const openEditModal = (id, area, notes, weight, assessment) => {
-    setEditModalIsOpen((prev) => ({...prev, open:true, id, area, notes, weight,  assessment}));
+  const openEditModal = (id, area, notes, weight) => {
+    setEditModalIsOpen((prev) => ({...prev, open:true, id, area, notes, weight}));
   }
   const closeEditModal = () => {
-    setEditModalIsOpen((prev) => ({...prev, open: false}));
+    setEditModalIsOpen((prev) => ({...prev, open: false, id: null, area: '', notes: '', weight: '', }));
   }
 
   // Filter search results
@@ -74,16 +74,31 @@ export default function AdminQuestions() {
         results = [...results, ...questionsByArea];
       }
     })
-    // groups.forEach((group) => {
-    //   if (group.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-    //     let questionsByGroup = questionList.filter((q) => {
-          
-    //     })
-    //     results = [...results, ...questionsByGroup];
-    //   }
-    // })
-    console.log(results)
     return results;
+  };
+  // Add a question
+  const addQuestion = (question) => {
+    axios.post("http://localhost:9000/api/questions/", question )
+    .then((res) => {
+      setQuestionList((prev) => ([...prev], res.data))
+    })
+    .catch((err) =>  err);
+  }
+  // Edit a question
+  const editQuestion = (question) => {
+    axios.post("http://localhost:9000/api/questions/edit", question)
+    .then ((data) => {
+      setQuestionList((prev) => ([...prev], data.data))
+    })
+    .catch((err) => err);
+  };
+  // Delete a question
+  const deleteQuestion = (id) => {
+    axios.post("http://localhost:9000/api/questions/delete", {id} )
+    .then((data) => {
+      setQuestionList((prev) => ([...prev], data.data))
+    })
+    .catch((err) => err);
   }
 
   return( questionList &&
@@ -129,7 +144,7 @@ export default function AdminQuestions() {
                         <td>{area.name}</td>
                         <td className="question-col">{val.notes}</td>
                         <td>{val.weight}</td>
-                        <td><FontAwesomeIcon id="edit-icon" style={{'color': '#037ffc'}} icon={faEdit} onClick={()=>openEditModal(val.id,area.name,val.notes,val.weight,val.assessment)}/></td>
+                        <td><FontAwesomeIcon id="edit-icon" style={{'color': '#037ffc'}} icon={faEdit} onClick={()=>openEditModal(val.id,area.name,val.notes,val.weight)}/></td>
                         <td><FontAwesomeIcon id="trash-icon" style={{'color': '#dc3545'}} icon={faTrashAlt} onClick={()=>openConfirmationModal(val.id)}/></td>
                       </tr>
                     )
@@ -143,17 +158,20 @@ export default function AdminQuestions() {
       {modalIsOpen &&
       <AddQuestionModal
       closeModal={closeModal}
-      modalIsOpen={modalIsOpen}/>
+      modalIsOpen={modalIsOpen}
+      addQuestion={addQuestion}/>
       }
       {confirmationModalIsOpen.open &&
       <DeleteConfirmation
       closeConfirmationModal={closeConfirmationModal}
+      deleteQuestion={deleteQuestion}
       confirmationModalIsOpen={confirmationModalIsOpen}/>
       }
       {editModalIsOpen.open &&
       <EditQuestionModal
       closeEditModal={closeEditModal}
-      editModalIsOpen={editModalIsOpen}/>
+      editModalIsOpen={editModalIsOpen}
+      editQuestion={editQuestion}/>
       }
       <BackToTop showBelow={250}/>
       <DownToBottom showBelow={250}/>
