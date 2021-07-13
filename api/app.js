@@ -57,6 +57,7 @@ const questionRoute = require('./routes/questions');
 const areaRoute = require('./routes/areas')
 const groupRoute = require('./routes/groups');
 const interviewRoute = require('./routes/interview');
+const sessionQuestions = require('./routes/session-questions');
 
 //use routes
 app.use('/', indexRoute);
@@ -68,6 +69,7 @@ app.use('/api/questions', questionRoute(db));
 app.use('/api/areas', areaRoute(db));
 app.use('/api/groups', groupRoute(db));
 app.use('/api/interview', interviewRoute(db));
+app.use('/api/session-questions', sessionQuestions(db));
 
 app.get('/', (req, res) => {
   res.send('test');

@@ -105,6 +105,7 @@ export default function AddQuestionModal(props) {
      else {
     setQuestion({...question, [e.target.name]: e.target.value});
      }
+     console.log(question)
   };
 
   const handleSubmit = (e) => {
