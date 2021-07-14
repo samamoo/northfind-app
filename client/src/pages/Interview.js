@@ -63,6 +63,7 @@ export default function Interview(props) {
         setSessionQuestion((prev) => ({...prev, sessionId: sessionId, questionId: id, [e.target.name]: e.target.value}));
       }
      }
+     console.log(sessionQuestion);
    }
    if(sessionQuestion.comments !== '' && sessionQuestion.score !== null && sessionQuestion.assessment !== null) {
      if(sessionQuestionList.questions.length === 0) {
@@ -95,6 +96,7 @@ export default function Interview(props) {
       <h1>Interview Session</h1>
       <div className="line"></div>
       <div className="admin-questions-searchresults">
+      <Form.Group>
         <table>
         <thead>
               <tr>
@@ -104,7 +106,7 @@ export default function Interview(props) {
               </tr>
             </thead>
           <tbody>
-          <Form.Group>
+          
           {questionsIds.questions.map((val, key) => {
                 for (const area of areas) {
                   for (const group of groups) {
@@ -137,9 +139,10 @@ export default function Interview(props) {
                   }
                 }
               })}
-              </Form.Group>
+             
           </tbody>
         </table>
+        </Form.Group>
       </div>
       <div className="interview-next py-5">
           <Button onClick={handleSubmit} variant="primary" type="button">Submit
