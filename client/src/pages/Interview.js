@@ -53,15 +53,15 @@ export default function Interview(props) {
    for(let val of questionsIds.questions) {
      if(val.id === id){
        let score;
-      if(!sessionQuestion.score && sessionQuestion.assessment) {
+      
         score = parseInt(sessionQuestion.assessment, 10) * val.weight;
         console.log(score);
 
-        setSessionQuestion((prev) => ({...prev,score: score, sessionId: sessionId, questionId: id, [e.target.name]: e.target.value}));
-      } else {
+        // setSessionQuestion((prev) => ({...prev,score: score, sessionId: sessionId, questionId: id, [e.target.name]: e.target.value}));
+      
         
-        setSessionQuestion((prev) => ({...prev, sessionId: sessionId, questionId: id, [e.target.name]: e.target.value}));
-      }
+        setSessionQuestion((prev) => ({...prev, score: score, sessionId: sessionId, questionId: id, [e.target.name]: e.target.value}));
+      
      }
      console.log(sessionQuestion);
    }
