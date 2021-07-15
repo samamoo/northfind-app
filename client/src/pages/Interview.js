@@ -8,19 +8,8 @@ import { Form } from 'react-bootstrap';
 
 
 export default function Interview(props) {
-  let temp;
-  const [sessionQuestion, setSessionQuestion] = useState({
-    questionId:null,
-    sessionId:null,
-    comments: '',
-    score: null,
-    assessment:null
-  }
-  );
-  const [sessionQuestionList, setSessionQuestionList] = useState({
-    questions: []}
-  )
-  
+ 
+  const [sessionQuestions, setSessionQuestions] = useState({questions:[]})
   const [redirect, setRedirect] = useState(false)
 
   const questionsIds = props.location.state.questions;
@@ -31,7 +20,7 @@ export default function Interview(props) {
  
  const handleSubmit = (e) => {
   e.preventDefault();
-  axios.post("http://localhost:9000/api/session-questions", sessionQuestionList)
+  axios.post("http://localhost:9000/api/session-questions", {sessionQuestions, sessionId})
   .then ((res) => {
     console.log(res)
   })
@@ -40,53 +29,23 @@ export default function Interview(props) {
 })
     // setRedirect(!redirect);
   };
-  const findQuestion = (id) => {
-    let question = sessionQuestionList.questions.filter(val => val.questionId === id);
-    if(question.length === 0){
-      return false;
-    } 
-    return true;
-   
+  
+  const changeHandler = (id,e) => {
+    let name = e.target.name;
+   const sessionQuestions = questionsIds.questions.map(val => {
+      if(val.id === id) {
+        val[name] = e.target.value;
+        if(!val['assessment']) {
+          val['assessment'] = 0;
+        }
+        val['score'] = parseInt(val['assessment'], 10) * val.weight;
+      }
+      return val;
+    })
+    setSessionQuestions((prev) => ({...prev, questions:sessionQuestions}));
   }
  
- const changeHandler = (id,e) => {
-   for(let val of questionsIds.questions) {
-     if(val.id === id){
-       let score;
-      
-        score = parseInt(sessionQuestion.assessment, 10) * val.weight;
-        console.log(score);
 
-        // setSessionQuestion((prev) => ({...prev,score: score, sessionId: sessionId, questionId: id, [e.target.name]: e.target.value}));
-      
-        
-        setSessionQuestion((prev) => ({...prev, score: score, sessionId: sessionId, questionId: id, [e.target.name]: e.target.value}));
-      
-     }
-     console.log(sessionQuestion);
-   }
-   if(sessionQuestion.comments !== '' && sessionQuestion.score !== null && sessionQuestion.assessment !== null) {
-     if(sessionQuestionList.questions.length === 0) {
-       sessionQuestionList.questions.push(sessionQuestion);
-     }
-     if(!findQuestion(sessionQuestion.questionId)) {
-      
-       setSessionQuestionList((prev) => ({...prev, questions: [...sessionQuestionList.questions, sessionQuestion]}))
-     } else {
-      
-      for(let val of sessionQuestionList.questions) {
-        if(val.questionId === id) {
-          
-          val.comments = sessionQuestion.comments;
-          val.assessment = sessionQuestion.assessment;
-          val.score = sessionQuestion.score;
-        }
-      }
-     }
-   }
- 
-   console.log(sessionQuestionList);
- }
  
   return(
    
@@ -115,7 +74,8 @@ export default function Interview(props) {
                         <>
                         <tr key={val.id}>
                         <td>
-                        <Form.Control as="select" name='assessment' onChange={(e) => changeHandler(val.id, e)}>
+                        <Form.Control as="select" name="assessment" onChange={(e) => changeHandler(val.id, e)}>
+                          <option>0</option>
                           <option>1</option>
                           <option>2</option>
                           <option>3</option>

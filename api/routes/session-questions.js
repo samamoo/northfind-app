@@ -6,10 +6,11 @@ module.exports = (db) => {
 
   // Create a new interview session
   router.post('/', (req, res) => {
-   const arrayObject = req.body.questions;
+    console.log(req.body);
+   const arrayObject = req.body.sessionQuestions.questions;
+   const session_id = req.body.sessionId;
    for( let val of arrayObject ) {
-     const question_id = val.questionId;
-     const session_id = val.sessionId;
+     const question_id = val.id;
      const comments = val.comments;
      const assessment = val.assessment;
      const score = val.score;
