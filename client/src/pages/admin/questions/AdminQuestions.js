@@ -122,7 +122,7 @@ export default function AdminQuestions() {
       </div>
       <div className="line"></div>
       <div className="admin-questions-searchresults">
-        <table>
+        <table className="table table-hover">
           <thead>
             <tr>
               <th className="table-heading">Group</th>
