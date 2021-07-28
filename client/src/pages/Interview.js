@@ -5,7 +5,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
-
+import './Interview.scss';
 
 export default function Interview(props) {
  
@@ -18,15 +18,15 @@ export default function Interview(props) {
   const sessionId = props.location.state.sessionId;
 
  
- const handleSubmit = (e) => {
-  e.preventDefault();
-  axios.post("http://localhost:9000/api/session-questions", {sessionQuestions, sessionId})
-  .then ((res) => {
-    console.log(res)
-  })
-.catch(err => {
-  console.log(err);
-})
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post("http://localhost:9000/api/session-questions", {sessionQuestions, sessionId})
+    .then ((res) => {
+      setRedirect(true);
+    })
+    .catch(err => {
+      console.log(err);
+    })
     // setRedirect(!redirect);
   };
   
@@ -57,13 +57,14 @@ export default function Interview(props) {
       <div className="admin-questions-searchresults">
       <Form.Group>
         <table>
-        <thead>
-              <tr>
-                <th>Assessment</th>
-                <th>Question</th>
-              
-              </tr>
-            </thead>
+          <thead>
+            <tr>
+              <th className="table-heading">Question</th>
+              <th className="table-heading">Assessment Value</th>
+              <th className="table-heading">Additional Notes</th>
+            
+            </tr>
+          </thead>
           <tbody>
           
           {questionsIds.questions.map((val, key) => {
@@ -73,23 +74,24 @@ export default function Interview(props) {
                       return (
                         <>
                         <tr key={val.id}>
-                        <td>
-                        <Form.Control as="select" name="assessment" onChange={(e) => changeHandler(val.id, e)}>
-                          <option>0</option>
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
-                          
-                        </Form.Control>
+                          <td className="question-col" >{val.notes}</td>
+                          <td>
+                            <Form.Group>
+                              <Form.Control as="select" name="assessment" onChange={(e) => changeHandler(val.id, e)}>
+                                <option>Select...</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                              </Form.Control>
+                            </Form.Group>
+                          </td>
+                        <td style={{ "height": "100%", "width": "25%"}}>   
+                        <Form.Control placeholder='Additional notes...'  onChange={(e) =>changeHandler(val.id, e)} name='comments' as="textarea" row={5}/>
                         </td>
-                        <td className="question-col" >{val.notes}</td>
                         </tr>
                         <tr >
-                        <td colSpan='2'>   
-                        <Form.Control placeholder='Please write your comments here'  onChange={(e) =>changeHandler(val.id, e)} type='text' name='comments' as="input"/>
-                        </td>
                         </tr>
                        
                         </>
@@ -107,7 +109,8 @@ export default function Interview(props) {
       <div className="interview-next py-5">
           <Button onClick={handleSubmit} variant="primary" type="button">Submit
           <FontAwesomeIcon id="arrow-right" style={{'margin-left': '10px'}} icon={faArrowRight}/></Button>
-         
+         {redirect && <Redirect to={{pathname:"/end"}}/>}
+         {/* {redirect && <Redirect to={{pathname:"/pre-submit", state: { questions: sessionQuestions.questions }}}/>} */}
       </div>
       </form>
     </main>

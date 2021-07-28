@@ -31,3 +31,10 @@
   justify-content: center;
   align-items: center;
 }
+tr:nth-child(odd) {
+  background-color: #e8f3ff;
+}
+.table-heading {
+  text-align: center;
+  background-color: #ffffff;
+}

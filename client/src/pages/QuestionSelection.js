@@ -63,7 +63,6 @@ export default function QuestionSelection(props) {
     if (!validate()) {
       return;
     }
-    console.log("SUBMIT")
     setRedirect(true);
   }
 
@@ -83,7 +82,6 @@ export default function QuestionSelection(props) {
     return results;
   }
 
-  console.log(selectedQuestions, "SELECTED QUESTIONS");
   return(
     <main className="interview">
       <Form>
@@ -109,12 +107,10 @@ export default function QuestionSelection(props) {
           <table>
             <thead>
               <tr>
-                <th>Select</th>
-                <th>Group</th>
-                <th>Area</th>
-                <th>Question</th>
-                {/* <th>Score</th>
-                <th style={{"width": "20%"}}>Additional Notes</th> */}
+                <th className="table-heading">Select</th>
+                <th className="table-heading">Group</th>
+                <th className="table-heading">Area</th>
+                <th className="table-heading">Question</th>
               </tr>
             </thead>
             <tbody>
@@ -163,9 +159,9 @@ export default function QuestionSelection(props) {
         <div className="interview-next py-5">
           <section className="register-validation">{error}</section>
           <Button  variant="primary" type="submit" onClick={handleSubmit}>Next
-          <FontAwesomeIcon id="arrow-right" style={{'margin-left': '10px'}} icon={faArrowRight}/></Button>
+          <FontAwesomeIcon id="arrow-right" style={{'marginLeft': '10px'}} icon={faArrowRight}/></Button>
           {/* if selectedQuestions != [], set redirect to true, else set error */}
-          { redirect && <Redirect to={{pathname:"/confirmation", state: { questions: selectedQuestions, areas, groups, sessionId}}}/>}
+          { redirect && <Redirect to={{pathname:"/confirm-questions", state: { questions: selectedQuestions, areas, groups, sessionId}}}/>}
         </div>
       </Form>
       <BackToTop showBelow={250}/>
