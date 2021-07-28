@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
 
-export default function Confirmation(props) {
+export default function ConfirmQuestions(props) {
   const [selectedQuestions, setSelectedQuestions] = useState({
     questions: []}
   )

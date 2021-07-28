@@ -5,11 +5,12 @@ import AdminQuestions from './pages/admin/questions/AdminQuestions';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import Navigation from "./components/Navigation";
 import ClientForm from './pages/ClientForm';
-import Confirmation from './pages/Confirmation';
+import ConfirmQuestions from './pages/ConfirmQuestions';
 import End from './pages/End';
 import Home from './pages/Home';
 import Interview from './pages/Interview';
 import Login from './pages/Login';
+import PreSubmit from './pages/PreSubmit';
 import Profile from './pages/Profile';
 import QuestionSelection from './pages/QuestionSelection';
 import Register from './pages/Register';
@@ -32,7 +33,8 @@ function App() {
         <Route path="/register" exact component={Register}/>
         <Route path="/clientform" exact render={(props) => <ClientForm {...props} state={state}/>}/>
         <Route path="/interview" exact component={Interview}/>
-        <Route path="/confirmation" exact component={Confirmation}/>
+        <Route path="/confirm-questions" exact component={ConfirmQuestions}/>
+        <Route path="/pre-submit" exact component={PreSubmit}/>
         <Route path="/question-selection" exact component={QuestionSelection}/>
         <Route path="/end" exact component={End}/>
         <Route path="/" exact component={Home}/>
