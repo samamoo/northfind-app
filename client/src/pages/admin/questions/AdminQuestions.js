@@ -1,5 +1,4 @@
 import React , { useState, useEffect } from 'react';
-import { Modal, Button, Form, FormControl } from 'react-bootstrap'
 import AddQuestionModal from './AddQuestionModal';
 import BackToTop from '../../../components/BackToTop';
 import DownToBottom from '../../../components/DownToBottom';
