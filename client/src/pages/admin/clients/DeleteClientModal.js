@@ -22,7 +22,7 @@ export default function DeleteClientModal(props) {
           <Button variant="secondary" onClick={props.closeDeleteModal}>Cancel</Button>
           <Button variant="primary" onClick={handleSubmit}>Delete</Button>
         </Modal.Footer>
-    
+  
     </Modal>
   )
 }
