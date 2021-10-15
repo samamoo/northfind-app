@@ -8,20 +8,76 @@ module.exports = (db) => {
     let organization = [];
     let tools = [];
     // Performance Measurement Group
-    db.query(`SELECT * FROM session_questions
-    JOIN questions 
-    ON question_id = questions.id 
-    WHERE questions.area_id = 1
-    OR questions.area_id = 2
-    OR questions.area_id = 3
-    OR questions.area_id = 4
-    OR questions.area_id = 5
-    OR questions.area_id = 6
-    OR questions.area_id = 7
-    ORDER BY questions.area_id;`)
-    .then((data) => {
-      perfMeas = data.rows;
-      db.query(`SELECT * FROM session_questions
+    // db.query(`SELECT * FROM session_questions
+    // JOIN questions 
+    // ON question_id = questions.id 
+    // WHERE questions.area_id = 1
+    // OR questions.area_id = 2
+    // OR questions.area_id = 3
+    // OR questions.area_id = 4
+    // OR questions.area_id = 5
+    // OR questions.area_id = 6
+    // OR questions.area_id = 7
+    // ORDER BY questions.area_id;`)
+    // .then((data) => {
+    //   perfMeas = data.rows;
+    //   db.query(`SELECT * FROM session_questions
+    //   JOIN questions 
+    //   ON question_id = questions.id 
+    //   WHERE questions.area_id = 8
+    //   OR questions.area_id = 9
+    //   OR questions.area_id = 10
+    //   OR questions.area_id = 11
+    //   OR questions.area_id = 12
+    //   OR questions.area_id = 13
+    //   ORDER BY questions.area_id;`)
+    //   .then((b) => {
+    //     process = b.rows;
+    //     db.query(`SELECT * FROM session_questions
+    //     JOIN questions 
+    //     ON question_id = questions.id 
+    //     WHERE questions.area_id = 14
+    //     OR questions.area_id = 15
+    //     OR questions.area_id = 16
+    //     ORDER BY questions.area_id;`)
+    //     .then((c) => {
+    //       console.log(c.rows);
+    //       organization = c.rows;
+    //       db.query(`SELECT * FROM session_questions
+    //       JOIN questions 
+    //       ON question_id = questions.id 
+    //       WHERE questions.area_id = 17
+    //       OR questions.area_id = 18
+    //       ORDER BY questions.area_id;`)
+    //       .then((d) => {
+    //         console.log(d.rows)
+    //         tools = d.rows;
+    //         res.status(200).send({perfMeas, process, organization, tools})
+    //       })
+    //     })
+    //   })
+    // })
+    // .catch((err) => {
+    //   res.status(500).json({error: err.message});
+    // })
+
+    let perfMeasQuery = db.query(`SELECT * FROM session_questions
+      JOIN questions 
+      ON question_id = questions.id 
+      WHERE questions.area_id = 1
+      OR questions.area_id = 2
+      OR questions.area_id = 3
+      OR questions.area_id = 4
+      OR questions.area_id = 5
+      OR questions.area_id = 6
+      OR questions.area_id = 7
+      ORDER BY questions.area_id;`)
+      .then((a) => {
+        perfMeas = a.rows;
+        return perfMeas;
+      })
+  
+    let processQuery = db.query(`SELECT * FROM session_questions
       JOIN questions 
       ON question_id = questions.id 
       WHERE questions.area_id = 8
@@ -31,34 +87,40 @@ module.exports = (db) => {
       OR questions.area_id = 12
       OR questions.area_id = 13
       ORDER BY questions.area_id;`)
-      .then((b) => {
-        process = b.rows;
-        db.query(`SELECT * FROM session_questions
-        JOIN questions 
-        ON question_id = questions.id 
-        WHERE questions.area_id = 14
-        OR questions.area_id = 15
-        OR questions.area_id = 16
-        ORDER BY questions.area_id;`)
-        .then((c) => {
-          console.log(c.rows);
-          organization = c.rows;
-          db.query(`SELECT * FROM session_questions
-          JOIN questions 
-          ON question_id = questions.id 
-          WHERE questions.area_id = 17
-          OR questions.area_id = 18
-          ORDER BY questions.area_id;`)
-          .then((d) => {
-            console.log(d.rows)
-            tools = d.rows;
-            res.status(200).send({perfMeas, process, organization, tools})
-          })
-        })
+      .then((a) => {
+        process = a.rows;
+        return process;
       })
+
+    let orgQuery = db.query(`SELECT * FROM session_questions
+      JOIN questions 
+      ON question_id = questions.id 
+      WHERE questions.area_id = 14
+      OR questions.area_id = 15
+      OR questions.area_id = 16
+      ORDER BY questions.area_id;`)
+      .then((a) => {
+        organization = a.rows;
+        return organization;
+      })
+
+    let toolsQuery = db.query(`SELECT * FROM session_questions
+      JOIN questions 
+      ON question_id = questions.id 
+      WHERE questions.area_id = 17
+      OR questions.area_id = 18
+      ORDER BY questions.area_id;`)
+      .then((a) => {
+        tools = a.rows;
+        return tools;
+      })
+  
+    Promise.all([perfMeasQuery, processQuery, orgQuery, toolsQuery])
+    .then((data) => {
+      res.status(200).json(data)
     })
-    .catch((err) => {
-      res.status(500).json({error: err.message});
+    .catch((error) => {
+      console.log( "rejected", error)
     })
   })
 
