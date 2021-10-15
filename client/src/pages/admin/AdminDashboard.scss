@@ -1,0 +1,29 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  margin-top: 130px;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-bottom: 5%;
+}
+.dashboard_table-heading {
+  text-align: center;
+  background-color: #ffffff;
+  width: 65%;
+  font-weight: bold;
+}
+.dashboard-banner {
+  width: 100%;
+}
+.group-table {
+  margin-bottom: 20px;
+}
+.process-column {
+  background-color: #ffe7e7;
+}
+.org-column {
+  background-color: #f4ffe7;
+}
+.tools-column {
+  background-color: #ffffe7;
+}
