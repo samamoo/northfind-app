@@ -3,7 +3,6 @@ import { Navbar, NavDropdown, Nav } from "react-bootstrap";
 import './Navigation.scss';
 
 export default function Navigation (props) {
-  console.log(props, "Props in login")
 
   return (
     <Navbar fixed="top" collapseOnSelect expand="md" bg="dark" variant="dark">
@@ -16,6 +15,7 @@ export default function Navigation (props) {
           <Nav.Link href="#pricing">Pricing</Nav.Link> */}
           <NavDropdown title="Admin" id="collasible-nav-dropdown">
             <NavDropdown.Item href="/admin-dashboard">Dashboard</NavDropdown.Item>
+            <NavDropdown.Item href="/admin-interviews">Interview Sessions</NavDropdown.Item>
             <NavDropdown.Item href="/admin-client">Clients</NavDropdown.Item>
             <NavDropdown.Item href="/admin-questions">Interview Questions</NavDropdown.Item>
             <NavDropdown.Divider />

@@ -3,6 +3,7 @@ import useApplicationData from './hooks/useApplicationData';
 import AdminClient from './pages/admin/clients/AdminClient';
 import AdminQuestions from './pages/admin/questions/AdminQuestions';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminInterviews from './pages/admin/interviews/AdminInterviews';
 import Navigation from "./components/Navigation";
 import ClientForm from './pages/ClientForm';
 import ConfirmQuestions from './pages/ConfirmQuestions';
@@ -22,7 +23,6 @@ import {
 
 function App() {
   const { state, logoutUser, loginUser } = useApplicationData();
-  console.log(state)
 
   return (
     <Router>
@@ -41,6 +41,7 @@ function App() {
         <Route path="/admin-client" exact component={AdminClient}/>
         <Route path="/admin-questions" exact component={AdminQuestions}/>
         <Route path="/admin-dashboard" exact component={AdminDashboard}/>
+        <Route path="/admin-interviews" exact component={AdminInterviews}/>
       </Switch>
     </Router>
   );
