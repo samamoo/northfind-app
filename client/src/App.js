@@ -4,6 +4,7 @@ import AdminClient from './pages/admin/clients/AdminClient';
 import AdminQuestions from './pages/admin/questions/AdminQuestions';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminInterviews from './pages/admin/interviews/AdminInterviews';
+import AdminInterview from './pages/admin/interviews/AdminInterview';
 import Navigation from "./components/Navigation";
 import ClientForm from './pages/ClientForm';
 import ConfirmQuestions from './pages/ConfirmQuestions';
@@ -18,13 +19,15 @@ import Register from './pages/Register';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 
 function App() {
   const { state, logoutUser, loginUser } = useApplicationData();
 
   return (
+    // REDIRECT all pages to /login if stat.loggedIn is false
     <Router>
       <Navigation state={state} logout={logoutUser}/>
       <Switch>
@@ -37,11 +40,12 @@ function App() {
         <Route path="/pre-submit" exact component={PreSubmit}/>
         <Route path="/question-selection" exact component={QuestionSelection}/>
         <Route path="/end" exact component={End}/>
-        <Route path="/" exact component={Home}/>
+        <Route path="/" exact component={() => state.loggedIn? <Home/> : <Redirect to="/login" />}/>
         <Route path="/admin-client" exact component={AdminClient}/>
         <Route path="/admin-questions" exact component={AdminQuestions}/>
         <Route path="/admin-dashboard" exact component={AdminDashboard}/>
         <Route path="/admin-interviews" exact component={AdminInterviews}/>
+        <Route path="/admin-interview" exact component={AdminInterview}/>
       </Switch>
     </Router>
   );
