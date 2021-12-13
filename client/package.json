@@ -1,6 +1,6 @@
 {
   "name": "nfmi-tool",
-  "homepage":"http://nfmi-tool.com",
+  "homepage": "http://nfmi-tool.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
