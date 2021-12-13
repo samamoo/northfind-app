@@ -32,7 +32,7 @@ export default function useApplicationData() {
   const logoutUser = function() {
     return axios.post("http://localhost:9000/api/login/logout")
     .then(res => {
-      setState({...state, loggedIn: true, userData: {}, redirect: false});
+      setState({...state, loggedIn: false, userData: {}, redirect: false});
     })
   }
 

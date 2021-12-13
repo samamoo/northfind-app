@@ -9,6 +9,7 @@ export default function Navigation (props) {
       <img id="logo" src="/img/logo.png" alt="north-find logo"/>
       <Navbar.Brand href="/">NorthFind Assessment Tool</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        {props.state.loggedIn ?
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
           {/* <Nav.Link href="#features">Features</Nav.Link>
@@ -28,9 +29,17 @@ export default function Navigation (props) {
           <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/profile">Profile</Nav.Link>
           <Nav.Link href="/clientform">Start New Interview</Nav.Link>
-          {props.state.loggedIn ? <Nav.Link href="/login" onClick={props.logout}>Log Out</Nav.Link> : <Nav.Link href="/login" >Log In</Nav.Link>}
+          <Nav.Link href="/login" onClick={props.logout}>Log Out</Nav.Link>
         </Nav>
       </Navbar.Collapse>
+      :
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="mr-auto"></Nav>
+        <Nav>
+          <Nav.Link href="/login" >Log In</Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+      }
     </Navbar>
   )
 }
