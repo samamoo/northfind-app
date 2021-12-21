@@ -8,7 +8,7 @@ module.exports = (db) => {
     db.query(`SELECT * FROM interviews;`)
     .then((data) => {
       if (data) {
-        res.status(200).send(data.rows[0]);
+        res.status(200).send(data.rows);
       } else {
         res.send(false);
       }
