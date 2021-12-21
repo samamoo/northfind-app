@@ -10,13 +10,13 @@ const app = express();
 
 
 //import process.env settings
-require('dotenv').config();
+const PATH = path.resolve(__dirname, "./.env");
+require('dotenv').config({path:PATH});
 
 const PORT = process.env.PORT || 9000;
 const { Client } = require('pg');
-const db = new Client({
-  connectionString: process.env.DATABASE_URL,
-});
+const dbParams = require('./db.js');
+const db = new Client(dbParams);
 db.connect();
 app.use(cors({
   origin: ["http://localhost:3002"], //The front end
@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../client/build')));
 app.use(
   cookieSession({
     name: 'session',
